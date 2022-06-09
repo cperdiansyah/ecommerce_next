@@ -3,8 +3,8 @@ import Brand from '../../components/Brand';
 
 const Navbar = () => {
   return (
-    <nav className='nav-wrapper'>
-      <div className='container'>
+    <nav className='nav-wrapper py-4 bg-white shadow-md'>
+      <div className='container '>
         <Brand />
       </div>
     </nav>
