@@ -2,8 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    MONGO_URI:
-      'mongodb+srv://cperdiansyah:desawer1234@chandraperdiansyah.jk2kk.mongodb.net/ecommerce_next?retryWrites=true&w=majority',
+    MONGODB_URI: process.env.MONGODB_URI,
   },
 };
 

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const connection = {};
 
-const dbConnect = async () => {
+async function dbConnect() {
   /* try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
       useUnifiedTopology: true,
