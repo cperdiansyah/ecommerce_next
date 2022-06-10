@@ -1,27 +1,31 @@
-/* import { createReducer } from '@reduxjs/toolkit';
-import {
-  PRODUCT_LIST_REQUEST,
-  PRODUCT_LIST_SUCCESS,
-  PRODUCT_LIST_FAIL,
-} from '../constants/productConstans';
 
-const productReducer = createReducer([], (builder) => {
-  builder
-    .addCase(PRODUCT_LIST_REQUEST, (state) => {
-      state.loading = true;
-    })
-    .addCase(PRODUCT_LIST_SUCCESS, (state, action) => {
-      state.loading = false;
-      state.products = action.payload;
-    })
-    .addCase(PRODUCT_LIST_FAIL, (state, action) => {
-      state.loading = false;
-      state.errors = action.payload;
-    })
-    .addDefaultCase((state, action) => {
-      state;
-    });
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { getProducts } from '../actions/productActions';
+
+const productEntity = createEntityAdapter({
+  selectId: (product) => product._id,
 });
 
-export default productReducer;
- */
+const productSlice = createSlice({
+  name: 'product',
+  initialState: productEntity.getInitialState(),
+  extraReducers: {
+    [getProducts.pending.type]: (state, action) => {
+      state.loading = true;
+    },
+    [getProducts.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      productEntity.setAll(state, action.payload.data);
+    },
+    [getProducts.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.errors = action.payload;
+    },
+  },
+});
+
+export const productSelector = productEntity.getSelectors(
+  (state) => state.product
+);
+
+export default productSlice.reducer;

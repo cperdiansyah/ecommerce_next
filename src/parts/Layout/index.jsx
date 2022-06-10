@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import Head from 'next/head';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -13,7 +12,7 @@ const Layout = ({ children, pageTitle = ' ' }) => {
       </Head>
       <Header />
       <div className=' children-content'>
-        <main>{children}</main>
+        <main className='min-h-screen'>{children}</main>
       </div>
       <Footer />
     </>
