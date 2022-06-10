@@ -2,7 +2,7 @@ import React from 'react';
 
 
 import Head from 'next/head';
-import Navbar from '../Navbar';
+import Header from '../Header';
 import Footer from '../Footer';
 
 const Layout = ({ children, pageTitle = ' ' }) => {
@@ -11,7 +11,7 @@ const Layout = ({ children, pageTitle = ' ' }) => {
       <Head>
         <title>ChanStore {pageTitle}</title>
       </Head>
-      <Navbar />
+      <Header />
       <div className=' children-content'>
         <main>{children}</main>
       </div>
