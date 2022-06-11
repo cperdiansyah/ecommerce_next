@@ -8,9 +8,15 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import SearchBox from '../../components/SearchBox';
 
-const Header = () => {
+const Header = (props) => {
+  const className = [props.className];
+
   return (
-    <nav className='nav-wrapper py-5 bg-white shadow-md'>
+    <nav
+      className={`nav-wrapper py-5 bg-white bg-opacity-80 backdrop-blur shadow-md fixed w-full  z-10  ${className.join(
+        ' '
+      )}`}
+    >
       <div className='container flex justify-between items-center'>
         <Brand />
 

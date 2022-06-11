@@ -10,7 +10,7 @@ const categoriesSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Slug is required'],
     },
-    image: {
+    icon: {
       type: String,
       required: [true, 'Image is required'],
     },

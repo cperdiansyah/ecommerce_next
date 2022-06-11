@@ -11,6 +11,12 @@ export default function Document() {
           crossOrigin='anonymous'
           referrerPolicy='no-referrer'
         />
+
+        <link
+          href='https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined'
+          rel='stylesheet'
+          referrerPolicy='no-referrer'
+        />
       </Head>
       <body>
         <Main />
