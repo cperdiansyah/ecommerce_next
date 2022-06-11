@@ -1,4 +1,3 @@
-
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { getProducts } from '../actions/productActions';
 
@@ -6,7 +5,7 @@ const productEntity = createEntityAdapter({
   selectId: (product) => product._id,
 });
 
-const productSlice = createSlice({
+const productList = createSlice({
   name: 'product',
   initialState: productEntity.getInitialState(),
   extraReducers: {
@@ -25,7 +24,8 @@ const productSlice = createSlice({
 });
 
 export const productSelector = productEntity.getSelectors(
-  (state) => state.product
+  (state) => state.productList
 );
 
-export default productSlice.reducer;
+/* Export reducer */
+export const productListReducer = productList.reducer;

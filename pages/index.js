@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getProducts } from '../redux/slicer/productSlicer';
+import { getProducts } from '../redux/actions/productActions';
 import Layout from '../src/parts/Layout';
 
 export default function Home() {
