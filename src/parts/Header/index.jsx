@@ -6,12 +6,15 @@ import Brand from '../../components/Brand';
 
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import SearchBox from '../../components/SearchBox';
 
 const Header = () => {
   return (
     <nav className='nav-wrapper py-5 bg-white shadow-md'>
       <div className='container flex justify-between items-center'>
         <Brand />
+
+        <SearchBox className='border-2  w-1/2 rounded-2xl' />
 
         <div className='nav-menus-wrapper flex  items-center'>
           <div className='nav-menus'>

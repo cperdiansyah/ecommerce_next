@@ -18,12 +18,13 @@ const productList = createSlice({
     },
     [getProducts.rejected.type]: (state, action) => {
       state.loading = false;
-      state.errors = action.payload;
+      state.error = action.payload;
     },
   },
 });
 
-export const productSelector = productEntity.getSelectors(
+/* Export Selector */
+export const productListSelector = productEntity.getSelectors(
   (state) => state.productList
 );
 
