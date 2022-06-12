@@ -10,6 +10,7 @@ import CategoryCard from '../src/components/CategoryCard';
 
 import Loader from '../src/components/Loader';
 import Message from '../src/components/Message';
+import ProductCard from '../src/components/ProductCard';
 import SearchBox from '../src/components/SearchBox';
 import Layout from '../src/parts/Layout';
 
@@ -63,7 +64,6 @@ export default function Home() {
             </section>
 
             {/* Categories */}
-
             <section className='mt-20 mb-10'>
               <div className='container'>
                 <div className='categories-wrapper'>
@@ -78,6 +78,27 @@ export default function Home() {
                   <div className='flex flex-wrap justify-between mt-5 lg:mt-10'>
                     {categoryList.map((category, index) => (
                       <CategoryCard key={index} category={category} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Product */}
+            <section className='mt-20 mb-10'>
+              <div className='container'>
+                <div className='categories-wrapper'>
+                  <div className='w-full flex justify-between'>
+                    <h2 className='text-2xl font-bold text-slate-800 font-sans'>
+                      Popular Goods
+                    </h2>
+                    <Link href='/category'>
+                      <a className='text-xl text-primary'>Show All</a>
+                    </Link>
+                  </div>
+                  <div className='flex flex-wrap justify-between mt-5 lg:mt-10'>
+                    {productList.slice(0, 5).map((product, index) => (
+                      <ProductCard key={index} product={product} />
                     ))}
                   </div>
                 </div>

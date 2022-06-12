@@ -16,13 +16,13 @@ const Footer = () => {
               </p>
               <p className='text-xl font-semibold my-5'>Follow Us :</p>
               <div className='footer-icons opacity-80 text-2xl'>
-                <a href='#'>
+                <a href='#' target='_blank'>
                   <i className='fa-brands fa-facebook mr-5'></i>
                 </a>
-                <a href='#'>
+                <a href='#' target='_blank'>
                   <i className='fa-brands fa-twitter mr-5'></i>
                 </a>
-                <a href='#'>
+                <a href='#' target='_blank'>
                   <i className='fa-brands fa-instagram mr-5'></i>
                 </a>
               </div>
@@ -32,16 +32,16 @@ const Footer = () => {
               <p className='text-xl font-semibold '>Product </p>
               <ul className='footer-list mt-3'>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>Super Sale</Link>
+                  <Link href='/'>Super Sale</Link>
                 </li>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>Categories</Link>
+                  <Link href='/'>Categories</Link>
                 </li>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>Popular</Link>
+                  <Link href='/'>Popular</Link>
                 </li>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>New Goods</Link>
+                  <Link href='/'>New Goods</Link>
                 </li>
               </ul>
             </div>
@@ -50,16 +50,16 @@ const Footer = () => {
               <p className='text-xl font-semibold'>Marketplace </p>
               <ul className='footer-list mt-3'>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>About Us</Link>
+                  <Link href='/'>About Us</Link>
                 </li>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>Contact Us</Link>
+                  <Link href='/'>Contact Us</Link>
                 </li>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>News and Blog</Link>
+                  <Link href='/'>News and Blog</Link>
                 </li>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>Partners </Link>
+                  <Link href='/'>Partners </Link>
                 </li>
               </ul>
             </div>
@@ -68,16 +68,16 @@ const Footer = () => {
               <p className='text-xl font-semibold'>Information </p>
               <ul className='footer-list mt-3'>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>Terms & Conditions</Link>
+                  <Link href='/'>Terms & Conditions</Link>
                 </li>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>Privacy Policy</Link>
+                  <Link href='/'>Privacy Policy</Link>
                 </li>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>License Agreement</Link>
+                  <Link href='/'>License Agreement</Link>
                 </li>
                 <li className='my-3 opacity-80'>
-                  <Link href='#'>FAQ </Link>
+                  <Link href='/'>FAQ </Link>
                 </li>
               </ul>
             </div>

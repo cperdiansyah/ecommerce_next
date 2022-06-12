@@ -12,7 +12,7 @@ const Layout = ({ children, pageTitle = ' ' }) => {
       </Head>
       <Header />
       <div className=' children-content'>
-        <main className='min-h-max container lg:py-28'>{children}</main>
+        <main className='min-h-max container lg:py-32'>{children}</main>
       </div>
       <Footer />
     </>
