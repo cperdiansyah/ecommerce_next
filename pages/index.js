@@ -33,7 +33,7 @@ export default function Home() {
           <Loader />
         ) : (
           <>
-            {error && <Message severity='error' message={error} />}
+            {error && <Message status='error' message={error} />}
 
             {/* Hero Section */}
             <section className='rounded-3xl overflow-hidden bg-[#D6EFFB] '>

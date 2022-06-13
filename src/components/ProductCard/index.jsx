@@ -2,9 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-
 const ProductCard = ({ product }) => {
   return (
     <Link href={`/product/${product._id}`}>
@@ -27,11 +24,11 @@ const ProductCard = ({ product }) => {
         </div>
         <div className='product-info-wrapper flex justify-evenly items-center mt-5 w-full'>
           <button className='btn bg-white border border-slate-500  bg-opacity-80 p-2  text-slate-500 rounded-xl'>
-            <FavoriteBorderOutlinedIcon />
+            <i className='fa-regular fa-heart'></i>
           </button>
 
           <button className='btn bg-slate-white border border-slate-500 bg-opacity-80 p-2  text-slate-500  rounded-xl'>
-            <LocalMallOutlinedIcon />
+            <i className='fa-solid fa-bag-shopping'></i>
           </button>
           <button className='btn bg-slate-white bg-primary bg-opacity-80 p-2 shadow-md text-white  rounded-xl'>
             Buy

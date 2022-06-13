@@ -1,11 +1,10 @@
-import { Button, Link as MaterialLink } from '@mui/material';
+import { Button, ButtonGroup } from '@chakra-ui/react';
 import React from 'react';
 import Link from 'next/link';
+import styles from './header.module.scss';
 
 import Brand from '../../components/Brand';
 
-import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import SearchBox from '../../components/SearchBox';
 
 const Header = (props) => {
@@ -35,25 +34,21 @@ const Header = (props) => {
           <div className='flex items-center  mr-5'></div>
           <Link href='/'>
             <a className='flex items-center  mr-5'>
-              <FavoriteBorderOutlinedIcon className='mr-1 text-red-500' />
+              <i className='fa-regular fa-heart mr-1 text-red-500'></i>
             </a>
           </Link>
           <Link href='/'>
             <a className='flex items-center  mr-5'>
-              <LocalMallOutlinedIcon className='mr-1 ' />
+              <i className='fa-solid fa-bag-shopping'></i>
             </a>
           </Link>
 
-          <Button
-            variant='contained'
-            className='mr-4 bg-orange-400 rounded-lg shadow-md hover:bg-primary hover:shadow-lg'
-            color='warning'
-          >
+          <Button className='text-white bg-orange-400 rounded-lg shadow-md hover:bg-primary hover:shadow-lg mr-4'>
             Login
           </Button>
           <Button
-            variant='outlined'
-            className='bg rounded-lg border-orange-400  hover:bg-orange-100 '
+            variant='outline'
+            className='bg rounded-lg border-orange-400  text-primary hover:bg-orange-100 '
             color='warning'
           >
             Signup

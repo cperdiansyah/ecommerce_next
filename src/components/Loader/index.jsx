@@ -1,11 +1,15 @@
 import React from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
-
+import { Box } from '@chakra-ui/react';
+import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
 const Loader = () => {
   return (
     <Box className='min-h-full flex justify-center py-20'>
-      <CircularProgress disableShrink size={100} color='warning' />
+      <CircularProgress
+        size={100}
+        isIndeterminate
+        thickness='12px'
+        color='orange'
+      />
     </Box>
   );
 };
