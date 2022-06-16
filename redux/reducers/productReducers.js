@@ -1,14 +1,16 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { getProducts } from '../actions/productActions';
+import { getProducts, getProductDetails } from '../actions/productActions';
 
 const productEntity = createEntityAdapter({
   selectId: (product) => product._id,
 });
 
+/* Slicer*/
 const productList = createSlice({
-  name: 'product',
+  name: 'productList',
   initialState: productEntity.getInitialState(),
   extraReducers: {
+    /* List Products */
     [getProducts.pending.type]: (state, action) => {
       state.loading = true;
     },
@@ -23,10 +25,33 @@ const productList = createSlice({
   },
 });
 
+const productDetail = createSlice({
+  name: 'productDetail',
+  initialState: productEntity.getInitialState(),
+  extraReducers: {
+    /* Product Details */
+    [getProductDetails.pending.type]: (state, action) => {
+      state.loading = true;
+    },
+    [getProductDetails.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      productEntity.setOne(state, action.payload.data);
+    },
+    [getProductDetails.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
+});
+
 /* Export Selector */
 export const productListSelector = productEntity.getSelectors(
   (state) => state.productList
 );
+export const productDetailsSelector = productEntity.getSelectors(
+  (state) => state.productDetail
+);
 
 /* Export reducer */
 export const productListReducer = productList.reducer;
+export const productDetailsReducer = productDetail.reducer;

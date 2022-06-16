@@ -27,7 +27,11 @@ const Header = (props) => {
               <a className='mr-3 '>Home</a>
             </Link>
 
-            <Link href='/'>
+            <Link href='/product'>
+              <a className='mr-3 '>Product</a>
+            </Link>
+
+            <Link href='/category'>
               <a className='mr-3'>Category</a>
             </Link>
           </div>

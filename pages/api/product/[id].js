@@ -10,14 +10,18 @@ export default async (req, res) => {
   switch (method) {
     case 'GET':
       try {
-        const products = await Product.find(
-          {},
-          { name: 1, price: 1, image: 1 }
-        );
+        const product = await Product.findById(req.query.id);
+
+        if (!product) {
+          return res.status(404).json({
+            success: false,
+            message: 'Product not found',
+          });
+        }
 
         res.status(200).json({
           success: true,
-          data: products,
+          data: product,
         });
       } catch (error) {
         res.status(400).json({
@@ -27,7 +31,7 @@ export default async (req, res) => {
       }
       break;
     case 'POST':
-      try {
+      /*  try {
         const product = await Product.create(req.body);
         res.status(201).json({
           success: true,
@@ -38,7 +42,7 @@ export default async (req, res) => {
           success: false,
           message: error.message,
         });
-      }
+      } */
       break;
     default:
       res.status(405).json({
