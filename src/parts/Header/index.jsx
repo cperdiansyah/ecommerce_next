@@ -34,12 +34,12 @@ const Header = (props) => {
           <div className='flex items-center  mr-5'></div>
           <Link href='/'>
             <a className='flex items-center  mr-5'>
-              <i className='fa-regular fa-heart mr-1 text-red-500'></i>
+              <i className='fa-regular fa-heart mr-1 text-xl text-red-500'></i>
             </a>
           </Link>
           <Link href='/'>
             <a className='flex items-center  mr-5'>
-              <i className='fa-solid fa-bag-shopping'></i>
+              <i className='fa-solid fa-bag-shopping text-xl text-secondary'></i>
             </a>
           </Link>
 
