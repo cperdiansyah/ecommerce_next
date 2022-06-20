@@ -46,17 +46,25 @@ const Header = (props) => {
               <i className='fa-solid fa-bag-shopping text-xl text-secondary'></i>
             </a>
           </Link>
+          <Link href='/login'>
+            <a className='text-white'>
+              <Button className='text-white bg-orange-400 rounded-lg shadow-md hover:bg-primary hover:shadow-lg mr-4'>
+                Login
+              </Button>
+            </a>
+          </Link>
 
-          <Button className='text-white bg-orange-400 rounded-lg shadow-md hover:bg-primary hover:shadow-lg mr-4'>
-            Login
-          </Button>
-          <Button
-            variant='outline'
-            className='bg rounded-lg border-orange-400  text-primary hover:bg-orange-100 '
-            color='warning'
-          >
-            Signup
-          </Button>
+          <Link href='/register'>
+            <a className=''>
+              <Button
+                variant='outline'
+                className='bg rounded-lg border-orange-400  text-primary hover:bg-orange-100 '
+                color='warning'
+              >
+                Signup
+              </Button>
+            </a>
+          </Link>
         </div>
       </div>
     </nav>
