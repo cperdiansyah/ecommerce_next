@@ -4,14 +4,15 @@ import Image from 'next/image';
 import { Button } from '@chakra-ui/react';
 
 const ProductCard = ({ product }) => {
+  console.log(product.images[0].image);
   return (
     <div className='flex items-center mb-5 justify-center flex-wrap flex-col py-4 px-3 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-xl text-slate-700 lg:max-w-[18%] max-w-[35%]     '>
       <div className='image-wrapper lg:h-40 w-full relative'>
         <Link href={`/product/${product._id}`}>
           <a>
             <Image
-              src={`/products/${product.image}`}
-              blurDataURL={`/products/${product.image}`}
+              src={`/products/${product.images[0].image}`}
+              blurDataURL={`/products/${product.images[0].image}`}
               alt={product.name}
               layout='fill'
               className='rounded-xl'

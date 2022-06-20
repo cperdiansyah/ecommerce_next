@@ -11,7 +11,7 @@ export default async (req, res) => {
     case 'GET':
       try {
         const product = await Product.findById(req.query.id);
-
+        console.log(product);;
         if (!product) {
           return res.status(404).json({
             success: false,

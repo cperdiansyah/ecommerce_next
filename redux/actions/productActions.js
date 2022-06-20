@@ -11,7 +11,7 @@ export const getProducts = createAsyncThunk(PRODUCT_GET, async () => {
 export const getProductDetails = createAsyncThunk(
   PRODUCT_DETAIL_GET,
   async (id) => {
-    const { data } = await axios.get(`/api/product/detail/${id}`);
+    const { data } = await axios.get(`/api/product/${id}`);
     return data;
   }
 );

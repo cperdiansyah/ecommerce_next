@@ -3,6 +3,7 @@ import { getProducts, getProductDetails } from '../actions/productActions';
 
 const productEntity = createEntityAdapter({
   selectId: (product) => product._id,
+  loading: true,
 });
 
 /* Slicer*/

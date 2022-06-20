@@ -1,14 +1,15 @@
 // import React from 'react'
-import * as React from 'react';
-import { Alert, AlertIcon, AlertTitle } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
 
 const Message = ({ message, status = 'info' }) => {
-  return (
-    <Alert status={status}>
-      <AlertIcon />
-      <AlertTitle>{message}</AlertTitle>
-    </Alert>
-  );
+  const toast = useToast();
+  return toast({
+    title: message,
+    status: status,
+    duration: 5000,
+    isClosable: true,
+    position: 'top-right',
+  });
 };
 
 export default Message;

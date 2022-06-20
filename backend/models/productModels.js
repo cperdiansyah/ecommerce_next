@@ -1,5 +1,12 @@
 const mongoose = require('mongoose');
 
+const image = new mongoose.Schema({
+  image: {
+    type: String,
+    required: false,
+  },
+});
+
 const productsSchema = new mongoose.Schema(
   {
     user: {
@@ -11,9 +18,9 @@ const productsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
-      type: String,
-      required: true,
+    images: {
+      type: [image],
+      default: undefined,
     },
     brand: {
       type: String,
