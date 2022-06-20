@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { getCategories } from '../actions/categoryActions';
+import { getCategories, getCategoryDetail } from '../actions/categoryActions';
 
-const categoryEntity = createEntityAdapter({
+export const categoryEntity = createEntityAdapter({
   selectId: (category) => category._id,
 });
 

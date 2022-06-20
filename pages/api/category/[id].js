@@ -1,6 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
 import dbConnect from '../../../backend/config/db';
-import Product from '../../../backend/models/productModels';
 import Category from '../../../backend/models/categoryModels';
 
 dbConnect();
@@ -11,20 +10,18 @@ export default async (req, res) => {
   switch (method) {
     case 'GET':
       try {
-        const product = await Product.findById(req.query.id);
-        const category = await Category.findById(product.category);
+        const category = await Category.findById(req.query.id);
 
-        if (!product) {
+        if (!category) {
           return res.status(404).json({
             success: false,
-            message: 'Product not found',
+            message: 'category not found',
           });
         }
 
         res.status(200).json({
           success: true,
-          data: product,
-          category,
+          data: category,
         });
       } catch (error) {
         res.status(400).json({

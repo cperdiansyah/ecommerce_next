@@ -12,7 +12,7 @@ export default async (req, res) => {
       try {
         const products = await Product.find(
           {},
-          { name: 1, price: 1, images: 1 }
+          { name: 1, price: 1, images: 1, rating: 1 }
         );
 
         res.status(200).json({

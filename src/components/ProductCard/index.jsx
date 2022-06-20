@@ -1,10 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
+
 import Image from 'next/image';
 import { Button } from '@chakra-ui/react';
+import Rating from '../rating';
+
+import localCurrency from '../../../utils/localCurrency';
 
 const ProductCard = ({ product }) => {
-  console.log(product.images[0].image);
   return (
     <div className='flex items-center mb-5 justify-center flex-wrap flex-col py-4 px-3 bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-xl text-slate-700 lg:max-w-[18%] max-w-[35%]     '>
       <div className='image-wrapper lg:h-40 w-full relative'>
@@ -19,14 +22,16 @@ const ProductCard = ({ product }) => {
               objectFit='contain'
               placeholder='blur'
               priority={true}
+              position='relative'
             />
           </a>
         </Link>
       </div>
 
       <span className='text-lg font-bold text-slate-700 font-sans mt-3'>
-        Rp. {product.price}
+        {localCurrency(product.price)}
       </span>
+      <Rating value={product.rating} text={product.rating.toFixed(1)} />
 
       <Link href={`/product/${product._id}`}>
         <a className='text-base leading-normal text-center font-semibold mt-2'>

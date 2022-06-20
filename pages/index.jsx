@@ -55,6 +55,7 @@ export default function Home() {
                     <div className='image-wrapper flex justify-end'>
                       <Image
                         src='/hero-image.png'
+                        quality={50}
                         alt='Picture of the author'
                         width={270}
                         height={400}

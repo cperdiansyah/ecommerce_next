@@ -5,6 +5,10 @@ const image = new mongoose.Schema({
     type: String,
     required: false,
   },
+  isUrl: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const productsSchema = new mongoose.Schema(
