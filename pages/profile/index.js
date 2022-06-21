@@ -5,6 +5,7 @@ import Message from '../../src/components/Message';
 import Layout from '../../src/parts/Layout';
 
 const Profile = () => {
+  const [loading, setLoading] = React.useState(false);
   return (
     <Layout>
       {loading ? (
