@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
+import { userInfoReducer } from './reducers/userReducers';
 import {
   productListReducer,
   productDetailsReducer,
@@ -10,6 +11,7 @@ import {
 } from './reducers/categoryReducers';
 
 const reducer = combineReducers({
+  userInfo: userInfoReducer,
   productList: productListReducer,
   productDetail: productDetailsReducer,
   categoryList: categoryListReducer,

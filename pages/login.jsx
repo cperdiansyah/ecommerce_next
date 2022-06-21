@@ -1,6 +1,7 @@
 /* eslint-disable react/no-children-prop */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
   Input,
   Button,
@@ -17,25 +18,39 @@ import {
 import Layout from '../src/parts/Layout';
 
 import { FaLock, FaAt } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../redux/actions/userActions';
+import { userInfoSelector } from '../redux/reducers/userReducers';
 
 const CFaLock = chakra(FaLock);
 const CFaaAt = chakra(FaAt);
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const userLogin = useSelector(userInfoSelector.selectAll)[0];
+
+  useEffect(() => {
+    if (userLogin && userLogin.token) {
+      // window.location.href = '/';
+      router.push('/');
+    }
+  }, [userLogin, router]);
+
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('login');
+    console.log(email, password);
+    dispatch(login({ email, password }));
   };
 
   return (
     <Layout>
-      <div className='form-wrapper w-[50%] mx-auto block'>
+      <div className='form-wrapper w-[40%] mx-auto block'>
         <form onSubmit={submitHandler}>
           <h1 className='text-3xl font-sans py-5 text-center text-primary font-bold'>
             Login

@@ -42,7 +42,7 @@ const Register = () => {
 
   return (
     <Layout>
-      <div className='form-wrapper w-[50%] mx-auto block'>
+      <div className='form-wrapper w-[40%] mx-auto block'>
         <form onSubmit={submitHandler}>
           <h1 className='uppercase text-3xl font-sans py-5 text-center text-primary font-bold'>
             Signup
