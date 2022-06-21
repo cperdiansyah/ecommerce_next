@@ -1,14 +1,37 @@
 import { Button, ButtonGroup } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+
 import styles from './header.module.scss';
+import { CircularProgress } from '@chakra-ui/react';
 
 import Brand from '../../components/Brand';
 
 import SearchBox from '../../components/SearchBox';
+import { logout } from '../../../redux/actions/userActions';
 
 const Header = (props) => {
   const className = [props.className];
+  const dispatch = useDispatch();
+  const [isLogin, setIsLogin] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const userLogin = useSelector((state) => state.userInfo);
+
+  const { user } = userLogin;
+
+  const logoutHandler = (e) => {
+    e.preventDefault();
+    dispatch(logout());
+  };
+
+  useEffect(() => {
+    if (user && user.name) {
+      setIsLogin(true);
+    }
+    setLoading(false);
+  }, [user]);
 
   return (
     <nav
@@ -46,25 +69,41 @@ const Header = (props) => {
               <i className='fa-solid fa-bag-shopping text-xl text-secondary'></i>
             </a>
           </Link>
-          <Link href='/login'>
-            <a className='text-white'>
-              <Button className='text-white bg-orange-400 rounded-lg shadow-md hover:bg-primary hover:shadow-lg mr-4'>
-                Login
-              </Button>
-            </a>
-          </Link>
 
-          <Link href='/register'>
-            <a className=''>
-              <Button
-                variant='outline'
-                className='bg rounded-lg border-orange-400  text-primary hover:bg-orange-100 '
-                color='warning'
-              >
-                Signup
-              </Button>
-            </a>
-          </Link>
+          {loading ? (
+            <CircularProgress isIndeterminate size='30px' color='orange.300' />
+          ) : isLogin ? (
+            <Button
+              variant='outline'
+              className='bg rounded-lg border-orange-400  text-primary hover:bg-orange-100 '
+              clor='warning'
+              onClick={logoutHandler}
+            >
+              Logout
+            </Button>
+          ) : (
+            <section>
+              <Link href='/login'>
+                <a className='text-white'>
+                  <Button className='text-white bg-orange-400 rounded-lg shadow-md hover:bg-primary hover:shadow-lg mr-4'>
+                    Login
+                  </Button>
+                </a>
+              </Link>
+
+              <Link href='/register'>
+                <a className=''>
+                  <Button
+                    variant='outline'
+                    className='bg rounded-lg border-orange-400  text-primary hover:bg-orange-100 '
+                    color='warning'
+                  >
+                    Signup
+                  </Button>
+                </a>
+              </Link>
+            </section>
+          )}
         </div>
       </div>
     </nav>

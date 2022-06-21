@@ -1,9 +1,5 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { login } from '../actions/userActions';
-
-/* export const userEntity = createEntityAdapter({
-  selectId: (user) => user._id,
-}); */
+import { login, logout } from '../actions/userActions';
 
 let userInfoFormStorage = [];
 
@@ -17,7 +13,7 @@ if (typeof window !== 'undefined') {
 /* Slicer*/
 const getUserInfo = createSlice({
   name: 'getUserInfo',
-  initialState: { user: userInfoFormStorage, loading: true },
+  initialState: { user: userInfoFormStorage, loading: false },
   extraReducers: {
     /* User */
     [login.pending.type]: (state, action) => {
@@ -36,6 +32,13 @@ const getUserInfo = createSlice({
       return (state = {
         loading: false,
         error: action.payload,
+      });
+    },
+
+    [logout.fulfilled.type]: (state, action) => {
+      return (state = {
+        loading: false,
+        user: {},
       });
     },
   },

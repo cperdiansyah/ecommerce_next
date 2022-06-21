@@ -36,7 +36,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const userLogin = useSelector((state) => state.userInfo);
-  console.log(userLogin);
   const { loading, error, user } = userLogin;
 
   useEffect(() => {
@@ -47,7 +46,6 @@ const Login = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(email, password);
     dispatch(login({ email, password }));
   };
 
