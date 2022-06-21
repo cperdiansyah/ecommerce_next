@@ -1,8 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { getProducts, getProductDetails } from '../actions/productActions';
 
-import { categoryEntity } from './categoryReducers';
-
 const productEntity = createEntityAdapter({
   selectId: (product) => product._id,
 });
@@ -18,7 +16,7 @@ const productList = createSlice({
     },
     [getProducts.fulfilled.type]: (state, action) => {
       state.loading = false;
-      productEntity.setAll(state, action.payload.data);
+      productEntity.setAll(state, action.payload);
     },
     [getProducts.rejected.type]: (state, action) => {
       state.loading = false;
@@ -37,25 +35,7 @@ const productDetail = createSlice({
     },
     [getProductDetails.fulfilled.type]: (state, action) => {
       state.loading = false;
-      productEntity.setOne(state, action.payload.data);
-    },
-    [getProductDetails.rejected.type]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-  },
-});
-
-const categoryDetail = createSlice({
-  name: 'categoryDetail',
-  initialState: categoryEntity.getInitialState(),
-  extraReducers: {
-    [getProductDetails.pending.type]: (state, action) => {
-      state.loading = true;
-    },
-    [getProductDetails.fulfilled.type]: (state, action) => {
-      state.loading = false;
-      categoryEntity.setOne(state, action.payload.category);
+      productEntity.setOne(state, action.payload);
     },
     [getProductDetails.rejected.type]: (state, action) => {
       state.loading = false;
@@ -75,9 +55,3 @@ export const productDetailsSelector = productEntity.getSelectors(
 /* Export reducer */
 export const productListReducer = productList.reducer;
 export const productDetailsReducer = productDetail.reducer;
-
-/* Get Category Product*/
-export const categoryDetailsSelector = categoryEntity.getSelectors(
-  (state) => state.categoryDetail
-);
-export const categoryDetailsReducer = categoryDetail.reducer;

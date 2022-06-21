@@ -8,10 +8,7 @@ import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
 import { getProductDetails } from '../../redux/actions/productActions';
-import {
-  categoryDetailsSelector,
-  productDetailsSelector,
-} from '../../redux/reducers/productReducers';
+import { productDetailsSelector } from '../../redux/reducers/productReducers';
 
 import Loader from '../../src/components/Loader';
 import Message from '../../src/components/Message';
@@ -21,6 +18,7 @@ import Card from '../../src/components/Card';
 import localCurrency from '../../utils/localCurrency';
 import { getCategoryDetail } from '../../redux/actions/categoryActions';
 import Link from 'next/link';
+import { categoryDetailsSelector } from '../../redux/reducers/categoryReducers';
 
 const ProductDetails = () => {
   const { isReady, query } = useRouter();
@@ -37,6 +35,9 @@ const ProductDetails = () => {
     categoryDetailsSelector.selectById(state, categoryId)
   );
 
+  console.log(product);
+  console.log(category);
+
   useEffect(() => {
     if (isReady) {
       dispatch(getProductDetails(id));
@@ -48,8 +49,7 @@ const ProductDetails = () => {
       {loading ? (
         <Loader />
       ) : (
-        product &&
-        category && (
+        product && (
           <>
             {/* Product */}
             <section className='mb-10'>
@@ -95,11 +95,11 @@ const ProductDetails = () => {
                           </span>
                         </div>
                         <div className='block mt-4'>
-                          <Link href={`/category/${category.slug}`}>
+                          {/* <Link href={`/category/${category.slug}`}>
                             <a className='text-slate-600 underline'>
                               {category.name}
                             </a>
-                          </Link>
+                          </Link> */}
                         </div>
                         <Card className='mt-5  w-fit'>
                           <div className='flex flex-col'>

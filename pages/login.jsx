@@ -55,7 +55,6 @@ const Login = () => {
                 <Input
                   type='email'
                   placeholder='Email address'
-                  autoComplete={false}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -71,7 +70,6 @@ const Login = () => {
                 <Input
                   type={showPassword ? 'text' : 'password'}
                   placeholder='Password'
-                  autoComplete={false}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />

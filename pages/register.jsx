@@ -26,13 +26,18 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
 
+  const [showPasswordValidation, setShowPasswordValidation] = useState(false);
+  const handleShowValidationClick = () =>
+    setShowPasswordValidation(!showPasswordValidation);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordValidation, setPasswordValidation] = useState('');
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('login');
+    console.log('Signup');
   };
 
   return (
@@ -56,8 +61,7 @@ const Register = () => {
                 />
                 <Input
                   type='text'
-                  placeholder='Fullname'
-                  autoComplete={false}
+                  placeholder='Full Name'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -72,8 +76,7 @@ const Register = () => {
                 />
                 <Input
                   type='email'
-                  placeholder='email address'
-                  autoComplete={false}
+                  placeholder='Email Address'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -90,13 +93,36 @@ const Register = () => {
                 <Input
                   type={showPassword ? 'text' : 'password'}
                   placeholder='Password'
-                  autoComplete={false}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <InputRightElement width='4.5rem'>
                   <Button h='1.75rem' size='sm' onClick={handleShowClick}>
                     {showPassword ? 'Hide' : 'Show'}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+            <FormControl>
+              <InputGroup>
+                <InputLeftElement
+                  pointerEvents='none'
+                  color='gray.300'
+                  children={<CFaLock color='gray.300' />}
+                />
+                <Input
+                  type={showPasswordValidation ? 'text' : 'password'}
+                  placeholder='Password'
+                  value={passwordValidation}
+                  onChange={(e) => setPasswordValidation(e.target.value)}
+                />
+                <InputRightElement width='4.5rem'>
+                  <Button
+                    h='1.75rem'
+                    size='sm'
+                    onClick={handleShowValidationClick}
+                  >
+                    {showPasswordValidation ? 'Hide' : 'Show'}
                   </Button>
                 </InputRightElement>
               </InputGroup>
@@ -111,7 +137,7 @@ const Register = () => {
               className='bg-primary text-white rounded-lg py-5 text-lg'
               width='full'
             >
-              Login
+              Signup
             </Button>
           </Stack>
         </form>

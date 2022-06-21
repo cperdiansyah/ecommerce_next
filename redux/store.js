@@ -3,11 +3,10 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
   productListReducer,
   productDetailsReducer,
-  categoryDetailsReducer,
 } from './reducers/productReducers';
 import {
   categoryListReducer,
-  
+  categoryDetailsReducer,
 } from './reducers/categoryReducers';
 
 const reducer = combineReducers({
