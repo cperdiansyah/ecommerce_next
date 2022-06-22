@@ -2,9 +2,8 @@
 
 const nextConfig = {
   reactStrictMode: true,
-  /*  env: {
-    MONGODB_URI: process.env.MONGODB_URI,
-    BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+  /* env: {
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   }, */
 };
 
