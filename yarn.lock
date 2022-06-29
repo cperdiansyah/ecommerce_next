@@ -1593,6 +1593,11 @@
     "eslint-plugin-react" "^7.29.4"
     "eslint-plugin-react-hooks" "^4.5.0"
 
+"eslint-config-prettier@^8.5.0":
+  "integrity" "sha512-obmWKLUNCnhtQRKc+tmnYuQl0pFU1ibYJQ5BGhTVB08bHe9wC8qUeG7c08dj9XX+AuPj1YSGSQIHl1pnDHZR0Q=="
+  "resolved" "https://registry.npmjs.org/eslint-config-prettier/-/eslint-config-prettier-8.5.0.tgz"
+  "version" "8.5.0"
+
 "eslint-import-resolver-node@^0.3.6":
   "integrity" "sha512-0En0w03NRVMn9Uiyn8YRPDKvWjxCWkslUEhGNTdGx15RvPJYQ+lbOlqrlNI2vEAs4pDYK4f/HN2TbDmk5TP0iw=="
   "resolved" "https://registry.npmjs.org/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.6.tgz"
@@ -2290,6 +2295,11 @@
   "integrity" "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw=="
   "resolved" "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz"
   "version" "2.0.0"
+
+"js-cookie@^3.0.1":
+  "integrity" "sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw=="
+  "resolved" "https://registry.npmjs.org/js-cookie/-/js-cookie-3.0.1.tgz"
+  "version" "3.0.1"
 
 "js-tokens@^3.0.0 || ^4.0.0", "js-tokens@^4.0.0":
   "integrity" "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="
