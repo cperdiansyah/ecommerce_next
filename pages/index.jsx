@@ -13,7 +13,7 @@ import SearchBox from '../components/molecules/SearchBox';
 import { fetch } from '../utils/request';
 import ROOT_URL from '../utils/url';
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   const getProducts = await fetch(`${ROOT_URL}/api/product`);
   const getCategories = await fetch(`${ROOT_URL}/api/category`);
 
