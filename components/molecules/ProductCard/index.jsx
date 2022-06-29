@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import Image from 'next/image';
 import { Button } from '@chakra-ui/react';
-import Rating from '../rating';
+import Rating from '../Rating';
 
 import localCurrency from '../../../utils/localCurrency';
 
