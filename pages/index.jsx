@@ -8,17 +8,14 @@ import { getProducts } from '../redux/actions/productActions';
 import { categoryListSelector } from '../redux/reducers/categoryReducers';
 import { productListSelector } from '../redux/reducers/productReducers';
 
-import Loader from '../src/components/Loader';
-import Message from '../src/components/Message';
+import Loader from '../components/atom/Loader';
+import Message from '../components/atom/Message';
 // import Layout from '../src/parts/Layout'
 import Layout from '../components/templates/Layout';
-
-// import ProductCard from '../src/components/ProductCard';
 import ProductCard from '../components/molecules/ProductCard';
-// import CategoryCard from '../src/components/CategoryCard'
 import CategoryCard from '../components/molecules/CategoryCard';
 
-import SearchBox from '../src/components/SearchBox';
+import SearchBox from '../components/molecules/SearchBox';
 
 export default function Home() {
     const dispatch = useDispatch();
