@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { USER_LOGIN, USER_LOGOUT } from '../constants/userConstans';
+import ROOT_URL from '../../utils/url';
+import { fetch } from '../../utils/request';
 
-const ROOT_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const login = createAsyncThunk(
   USER_LOGIN,

@@ -1,20 +1,18 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   CATEGORY_GET,
   CATEGORY_DETAIL_GET,
 } from '../constants/categoryConstans';
+import ROOT_URL from '../../utils/url';
+import { fetch } from '../../utils/request';
 
-const ROOT_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export const getCategories = createAsyncThunk(CATEGORY_GET, async () => {
-  const { data } = await axios.get(`${ROOT_URL}/api/category`);
-  return data;
+  return fetch(`${ROOT_URL}/api/category`);
 });
 
 export const getCategoryDetail = createAsyncThunk(
   CATEGORY_DETAIL_GET,
   async (id) => {
-    const { data } = await axios.get(`${ROOT_URL}/api/category/${id}`);
-    return data;
+    return fetch(`${ROOT_URL}/api/category/${id}`);
   }
 );
