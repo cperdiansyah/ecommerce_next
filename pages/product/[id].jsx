@@ -45,8 +45,8 @@ const ProductDetails = (props) => {
         product &&
         category && (
           <Layout>
-            {/* Product */}
             {error && <Message status="error" message={error} />}
+            {/* Product */}
             <section className="mb-10">
               <div className="container">
                 <div className="categories-wrapper">

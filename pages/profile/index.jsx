@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Loader from '../../src/components/Loader';
 import Message from '../../src/components/Message';
 import Layout from '../../src/parts/Layout';
 
 const Profile = () => {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
   return (
     <Layout>
       {loading ? (
