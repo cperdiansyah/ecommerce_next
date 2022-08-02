@@ -1,5 +1,7 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Cookies from 'js-cookie';
+import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import nookies from 'nookies';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -22,18 +24,20 @@ import { FaLock, FaAt } from 'react-icons/fa';
 import Message from '../../atom/Message';
 import Loader from '../../atom/Loader';
 import { setLogin } from '../../../service/auth';
+import { decode } from '../../../utils/encoding';
 
 const CFaLock = chakra(FaLock);
 const CFaaAt = chakra(FaAt);
 
 const LoginForm = () => {
   const router = useRouter();
+  const cookies = parseCookies();
   const email = useRef(null);
   const password = useRef(null);
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [feedbackMessage, setFeedbackMessage] = useState('');
   const [messageStatus, setMessageStatus] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
@@ -43,9 +47,9 @@ const LoginForm = () => {
   const feedbackReset = useCallback(() => {
     setError(false);
     setLoading(false);
-    setErrorMessage('');
     setMessageStatus('');
-  }, [error, loading, errorMessage, messageStatus]);
+    setFeedbackMessage('');
+  }, [error, loading, feedbackMessage, messageStatus]);
 
   const feedback = useCallback(
     (
@@ -60,12 +64,12 @@ const LoginForm = () => {
       setLoading(true);
       setError(true);
       setMessageStatus(messageStatus);
-      setErrorMessage(messageFeedback);
-      setTimeout(() => {
-        feedbackReset();
-      }, 500);
+      setFeedbackMessage(messageFeedback);
     }
   );
+  useEffect(() => {
+    feedbackReset();
+  }, [feedbackMessage]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -86,12 +90,19 @@ const LoginForm = () => {
 
         response.then((res) => {
           const { token, refreshToken } = res.data;
-          const tokenBase64 = Buffer.from(token).toString('base64');
-          const refreshTokenBase64 =
-            Buffer.from(refreshToken).toString('base64');
+          const tokenBase64 = btoa(token);
+          const refreshTokenBase64 = btoa(refreshToken);
 
-          Cookies.set('token', tokenBase64, { expires: 1 });
-          Cookies.set('refreshToken', refreshTokenBase64, { expires: 1 });
+          // Set Cookies
+          nookies.set(null, 'token', tokenBase64, {
+            maxAge: 3 * 24 * 60 * 60,
+            path: '/',
+          });
+          nookies.set(null, 'refreshToken', refreshTokenBase64, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: '/',
+          });
+
           router.push('/');
         });
       }
@@ -100,7 +111,7 @@ const LoginForm = () => {
 
   return (
     <>
-      {error && <Message status={messageStatus} message={errorMessage} />}
+      {error && <Message status={messageStatus} message={feedbackMessage} />}
 
       <form onSubmit={submitHandler}>
         <h1 className="text-3xl font-sans py-5 text-center text-primary font-bold">

@@ -10,6 +10,7 @@ import Brand from '../../atom/Brand';
 
 import SearchBox from '../../molecules/SearchBox';
 import { logout } from '../../../redux/actions/userActions';
+import NavItem from '../../organisms/Navbar/NavItem';
 
 const Header = (props) => {
   const className = [props.className];
@@ -47,17 +48,15 @@ const Header = (props) => {
 
         <div className="nav-menus-wrapper flex  items-center">
           <div className="nav-menus">
-            <Link href="/">
-              <a className="mr-3 ">Home</a>
-            </Link>
-
-            <Link href="/product">
-              <a className="mr-3 ">Product</a>
-            </Link>
-
-            <Link href="/category">
-              <a className="mr-3">Category</a>
-            </Link>
+            <NavItem href="/" className="mr-3">
+              Home
+            </NavItem>
+            <NavItem href="/product" className="mr-3">
+              Product
+            </NavItem>
+            <NavItem href="/category" className="mr-3">
+              Category
+            </NavItem>
           </div>
           <div className="flex items-center  mr-5"></div>
           <Link href="/">
@@ -71,7 +70,9 @@ const Header = (props) => {
             </a>
           </Link>
 
-          {loading ? (
+          
+
+          {/* {loading ? (
             <CircularProgress isIndeterminate size="30px" color="orange.300" />
           ) : isLogin ? (
             <Button
@@ -92,7 +93,7 @@ const Header = (props) => {
                 Signup
               </Button>
             </section>
-          )}
+          )} */}
         </div>
       </div>
     </nav>

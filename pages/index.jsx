@@ -25,6 +25,7 @@ export async function getServerSideProps() {
   };
 }
 const Home = (props) => {
+  console.log(props);
   const { categoryList, productList } = props;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);

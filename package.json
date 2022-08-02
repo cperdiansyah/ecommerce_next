@@ -2,11 +2,13 @@
   "name": "ecommerce_apps",
   "version": "0.1.0",
   "private": true,
+  
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "export": "next export",
     "analyze": "ANALYZE=true yarn build",
     "analyze:server": "BUNDLE_ANALYZE=server yarn build",
     "analyze:browser": "BUNDLE_ANALYZE=browser yarn build"
@@ -20,7 +22,9 @@
     "axios": "^0.27.2",
     "framer-motion": "^6",
     "js-cookie": "^3.0.1",
+    "jwt-decode": "^3.1.2",
     "next": "12.1.6",
+    "nookies": "^2.5.2",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-icons": "^4.4.0",
@@ -36,6 +40,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8.4.14",
