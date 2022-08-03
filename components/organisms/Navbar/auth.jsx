@@ -1,65 +1,33 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import jwtDecode from 'jwt-decode';
-import nookies from 'nookies';
-import Cookies from 'js-cookie';
+import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 import Button from '../../atom/Button';
-import { CircularProgress } from '@chakra-ui/react';
+import Cookies from 'js-cookie';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../../redux/reducers/authReducers';
 
-export async function getServerSideProps() {
-  const token = Cookies.get('token');
-  const cookies = nookies;
-  if (token) {
-    const decoded = atob(token);
-    const payload = jwtDecode(decoded);
-    return {
-      props: {
-        isLogin: true,
-        user: payload,
-        cookies,
-      },
-    };
-  }
-
-  return {
-    props: {
-      isLogin: false,
-      cookies,
-    },
-  };
-}
-
-const Auth = (props) => {
+const Auth = ({ login }) => {
+  const dispatch = useDispatch();
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const authSelector = useSelector((state) => state.auth);
+  const { isLogin } = authSelector;
+
+  const username = Cookies.get('username');
+
   const [user, setUser] = useState({
     avatar: '',
   });
 
-  useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) {
-      const decoded = atob(token);
-      const payload = jwtDecode(decoded);
-      setIsLogin(true);
-      setUser(payload);
-    }
-    setLoading(false);
-  }, []);
-
   const onLogout = () => {
-    Cookies.remove('token');
+    Cookies.remove('username');
+    Cookies.remove('accessToken');
     Cookies.remove('refreshToken');
-    setIsLogin(false);
-    setUser({});
-    router.push('/');
+    dispatch(logout());
+    // router.push('/');
+    window.location.href = '/';
   };
-  if (loading) {
-    return <CircularProgress isIndeterminate size="30px" color="orange.300" />;
-  }
+
   if (isLogin) {
     return (
       <div className="flex justify-between items-center">
@@ -69,7 +37,7 @@ const Auth = (props) => {
             alt="avatar"
             className="rounded-full w-8 h-8"
           /> */}
-          <span className="ml-2">{user.name}</span>
+          <span className="mx-2">{username.split(' ')[0]}</span>
         </div>
         <button
           onClick={onLogout}
@@ -80,6 +48,7 @@ const Auth = (props) => {
       </div>
     );
   }
+
   return (
     <section>
       <Button isLink href="/login" className=" mr-4" variant="primary">

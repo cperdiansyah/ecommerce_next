@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 import Loader from '../components/atom/Loader';
 import Message from '../components/atom/Message';
 
 import Layout from '../components/templates/Layout';
-import ProductCard from '../components/molecules/ProductCard';
-import CategoryCard from '../components/molecules/CategoryCard';
 
 import SearchBox from '../components/molecules/SearchBox';
 import { fetch } from '../utils/request';
 import ROOT_URL from '../utils/url';
+import PopularProducts from '../components/organisms/PopularProducts';
+import HotCategories from '../components/organisms/HotCategories';
 
 export async function getServerSideProps() {
   const getProducts = await fetch(`${ROOT_URL}/api/product`);
@@ -25,7 +24,6 @@ export async function getServerSideProps() {
   };
 }
 const Home = (props) => {
-  console.log(props);
   const { categoryList, productList } = props;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -65,54 +63,10 @@ const Home = (props) => {
               </div>
             </div>
           </section>
-
           {/* Categories */}
-          <section className="mt-20 mb-10">
-            <div className="container">
-              <div className="categories-wrapper">
-                <div className="w-full flex justify-between">
-                  <h2 className="text-2xl font-bold text-slate-800 font-sans">
-                    Hot Categories 🔥
-                  </h2>
-                  <Link href="/category">
-                    <a className="text-xl text-primary">Show All</a>
-                  </Link>
-                </div>
-                <div className="flex flex-wrap justify-between mt-5 lg:mt-10">
-                  {categoryList.slice(0, 6).map((category, index) => (
-                    <CategoryCard key={index} category={category} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
+          <HotCategories categoryList={categoryList} />
           {/* Product */}
-          <section className="mt-20 mb-10">
-            <div className="container">
-              <div className="categories-wrapper">
-                <div className="w-full flex justify-between">
-                  <h2 className="text-2xl font-bold text-slate-800 font-sans">
-                    Popular Goods
-                  </h2>
-                  <Link href="/product">
-                    <a className="text-xl text-primary">Show All</a>
-                  </Link>
-                </div>
-                <div className="flex flex-wrap justify-between mt-5 lg:mt-10">
-                  {productList.length >= 5
-                    ? productList
-                        .slice(0, 5)
-                        .map((product, index) => (
-                          <ProductCard key={index} product={product} />
-                        ))
-                    : productList.map((product, index) => (
-                        <ProductCard key={index} product={product} />
-                      ))}
-                </div>
-              </div>
-            </div>
-          </section>
+          <PopularProducts productList={productList} />
         </Layout>
       )}
     </>

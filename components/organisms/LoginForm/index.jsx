@@ -1,10 +1,9 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import Cookies from 'js-cookie';
-import { parseCookies, setCookie, destroyCookie } from 'nookies';
-import nookies from 'nookies';
-
+import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import nookies from 'nookies';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Input,
@@ -17,33 +16,40 @@ import {
   FormControl,
   FormHelperText,
   InputRightElement,
-  useToast,
 } from '@chakra-ui/react';
 
 import { FaLock, FaAt } from 'react-icons/fa';
+
 import Message from '../../atom/Message';
 import Loader from '../../atom/Loader';
-import { setLogin } from '../../../service/auth';
-import { decode } from '../../../utils/encoding';
+import { AUTH_URL } from '../../../utils/url';
+
+import { login } from '../../../redux/reducers/authReducers';
 
 const CFaLock = chakra(FaLock);
 const CFaaAt = chakra(FaAt);
 
 const LoginForm = () => {
   const router = useRouter();
-  const cookies = parseCookies();
   const email = useRef(null);
   const password = useRef(null);
+  const dispatch = useDispatch();
 
+  /* State for password field */
+  const [showPassword, setShowPassword] = useState(false);
+  /* State for feedbackMessage */
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [messageStatus, setMessageStatus] = useState('');
 
-  const [showPassword, setShowPassword] = useState(false);
+  /* Redux Selector */
+  const auth = useSelector((state) => state.auth);
 
+  /* Action method */
   const handleShowClick = () => setShowPassword(!showPassword);
 
+  /* Feedback Method */
   const feedbackReset = useCallback(() => {
     setError(false);
     setLoading(false);
@@ -67,11 +73,12 @@ const LoginForm = () => {
       setFeedbackMessage(messageFeedback);
     }
   );
+
   useEffect(() => {
     feedbackReset();
   }, [feedbackMessage]);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const data = {
       email: email.current.value,
@@ -79,36 +86,34 @@ const LoginForm = () => {
     };
 
     if (!email.current.value || !password.current.value) {
-      feedback('error', 'Please fill all fields', email.current);
-    } else {
-      /* Response if data  */
-      const response = setLogin(data);
-      if (response.error) {
-        feedback('error', response.error);
-      } else {
-        feedback('success', 'Login Berhasil');
-
-        response.then((res) => {
-          const { token, refreshToken } = res.data;
-          const tokenBase64 = btoa(token);
-          const refreshTokenBase64 = btoa(refreshToken);
-
-          // Set Cookies
-          nookies.set(null, 'token', tokenBase64, {
-            maxAge: 3 * 24 * 60 * 60,
-            path: '/',
-          });
-          nookies.set(null, 'refreshToken', refreshTokenBase64, {
-            maxAge: 30 * 24 * 60 * 60,
-            path: '/',
-          });
-
-          router.push('/');
-        });
-      }
+      return feedback('error', 'Please fill all fields', email.current);
     }
-  };
 
+    /* Response if data  */
+    const response = await axios.post(`${AUTH_URL}/login`, data);
+
+    if (response.error) {
+      return feedback('error', response.error);
+    }
+    feedback('success', 'Login Successful');
+
+    const { accessToken, refreshToken, name } = response.data;
+
+    // Set Cookies
+    nookies.set(null, 'accessToken', accessToken, {
+      maxAge: process.env.NEXT_PUBLIC_JWT_COOKIE_IN || 20, // 20 seconds
+    });
+    nookies.set(null, 'refreshToken', refreshToken, {
+      maxAge: process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN || 60 * 60 * 7, // 7 Days
+    });
+    nookies.set(null, 'username', name, {
+      maxAge: process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN || 60 * 60 * 7, // 7 Days
+    });
+
+    dispatch(login());
+
+    return router.push('/');
+  };
   return (
     <>
       {error && <Message status={messageStatus} message={feedbackMessage} />}

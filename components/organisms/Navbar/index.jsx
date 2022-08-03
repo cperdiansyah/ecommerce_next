@@ -1,35 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { CircularProgress } from '@chakra-ui/react';
-import Link from 'next/link';
-
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
 import Brand from '../../atom/Brand';
-import Button from '../../atom/Button';
 import SearchBox from '../../molecules/SearchBox';
 import NavItem from './NavItem';
 import Auth from './Auth';
 
-const Navbar = ({ className, isLogin }) => {
-  /*  const dispatch = useDispatch();
-  // const [isLogin, setIsLogin] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  const userLogin = useSelector((state) => state.userInfo);
-
-  const { user } = userLogin;
-
-  const logoutHandler = (e) => {
-    e.preventDefault();
-    dispatch(logout());
-  };
-
-  useEffect(() => {
-       if (user && user.name) {
-            setIsLogin(true);
-        }
-    setLoading(false);
-  }, [user]); */
+const Navbar = ({ className }) => {
   return (
     <nav
       className={`nav-wrapper py-5 bg-white bg-opacity-80 backdrop-blur shadow-md fixed w-full  z-10  ${[
