@@ -11,6 +11,7 @@ const Button = ({
   href,
   type,
   isOutsideLink,
+  onClick,
   className,
 }) => {
   if (isLink) {
@@ -33,6 +34,7 @@ const Button = ({
         colorScheme={color}
         variant={variant}
         className={[className, disable ? 'disable' : ''].join(' ')}
+        onClick={onClick}
       >
         {children}
       </ButtonChakra>
