@@ -9,15 +9,15 @@ const PopularProducts = ({ productList }) => {
       <section className="mt-20 mb-10">
         <div className="container">
           <div className="categories-wrapper">
-            <div className="w-full flex justify-between">
-              <h2 className="text-2xl font-bold text-slate-800 font-sans">
+            <div className="flex w-full justify-between">
+              <h2 className="font-sans text-2xl font-bold text-slate-800">
                 Popular Goods
               </h2>
               <Link href="/product">
                 <a className="text-xl text-primary">Show All</a>
               </Link>
             </div>
-            <div className="flex flex-wrap justify-between mt-5 lg:mt-10">
+            <div className="mt-5 grid grid-cols-2 gap-5 md:grid-cols-3 lg:mt-10 lg:grid-cols-5 lg:gap-7">
               {productList.length >= 5
                 ? productList
                     .slice(0, 5)

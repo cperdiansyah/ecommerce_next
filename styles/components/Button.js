@@ -22,6 +22,12 @@ const Button = {
 
       _hover: {
         backgroundColor: 'orange.500',
+        _hover: {
+          backgroundColor: 'orange.300',
+        },
+        _active: {
+          backgroundColor: 'orange.400',
+        },
       },
     },
     outline: {
@@ -31,6 +37,22 @@ const Button = {
       borderColor: 'orange.400',
       _hover: {
         backgroundColor: 'orange.100',
+      },
+      _active: {
+        backgroundColor: 'orange.200',
+      },
+    },
+    outline_gray: {
+      backgroundColor: 'white',
+      color: 'gray.500',
+      border: '1px solid',
+      borderColor: 'gray.400',
+      borderRadius: '12px; ',
+      _hover: {
+        backgroundColor: 'gray.100',
+      },
+      _active: {
+        backgroundColor: 'gray.200',
       },
     },
   },

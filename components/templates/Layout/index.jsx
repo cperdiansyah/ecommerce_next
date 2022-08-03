@@ -27,7 +27,6 @@ const Layout = ({ children, pageTitle = ' ' }) => {
     dispatch(setLoading(false));
   }, [isLoading, isLogin]);
 
-
   return (
     <>
       {isLoading ? (
@@ -39,7 +38,9 @@ const Layout = ({ children, pageTitle = ' ' }) => {
           </Head>
           <Navbar />
           <div className=" children-content">
-            <main className="min-h-max container lg:py-32">{children}</main>
+            <main className="min-h-max container py-28 lg:py-32">
+              {children}
+            </main>
           </div>
           <Footer />
         </>

@@ -52,9 +52,9 @@ const ProductDetails = (props) => {
                 <div className="categories-wrapper">
                   {/* Product Details Top */}
                   <Card className="mb-10">
-                    <div className="w-full flex ">
+                    <div className="w-full flex flex-wrap flex-col lg:flex-row ">
                       {/* Image Wrapper */}
-                      <div className="product-image-view-wrapper pr-10 ">
+                      <div className="product-image-view-wrapper mx-auto lg:mx-0 lg:pr-10 ">
                         <div className="image-wrapper ">
                           <div className="image ">
                             <Zoom>
@@ -73,68 +73,13 @@ const ProductDetails = (props) => {
                           </div>
                         </div>
                       </div>
+
                       {/* Product Info Wrapper */}
-                      <div className="product-info-wrapper">
-                        <h2 className="text-3xl font-bold text-slate-800 font-sans">
-                          {product.name}
-                        </h2>
-                        <div className="rating wrapper mt-3 flex">
-                          <Rating
-                            value={product.rating}
-                            text={product.rating.toFixed(1)}
-                            isLarge
-                          />
-
-                          <span className="ml-1 text-lg font-semibold">
-                            ({product.numReviews} Reviews)
-                          </span>
-                        </div>
-                        <div className="block mt-4">
-                          <Link href={`/category/${category.slug}`}>
-                            <a className="text-slate-600 underline">
-                              {category.name}
-                            </a>
-                          </Link>
-                        </div>
-                        <Card className="mt-5  w-fit">
-                          <div className="flex flex-col">
-                            <div className="price-wrapper ">
-                              <span className="text-2xl font-semibold">
-                                {localCurrency(product.price)}
-                              </span>
-                            </div>
-                            <div className="product-info-wrapper flex justify-evenly items-center mt-5 w-full">
-                              <Button className="bg-white border border-slate-500 px-4 mr-2  bg-opacity-80 p-2  text-slate-500 rounded-xl">
-                                <i className="fa-regular fa-heart"></i>
-                              </Button>
-
-                              <Button className="bg-white border border-slate-500 px-4 mr-2 bg-opacity-80 p-2  text-slate-500  rounded-xl">
-                                <i className="fa-solid fa-bag-shopping"></i>
-                              </Button>
-
-                              <Button className="btn bg-slate-white bg-primary px-5 bg-opacity-80 p-2 shadow-md text-white  rounded-xl">
-                                Buy
-                              </Button>
-                            </div>
-                          </div>
-                        </Card>
-                      </div>
+                      <ProductInfo product={product} category={category} />
                     </div>
                   </Card>
-
                   {/* Product Description */}
-                  <Card>
-                    <div className="w-full flex flex-col">
-                      <div className="product-description-wrapper">
-                        <h2 className="text-3xl font-bold text-slate-800 font-sans">
-                          Description
-                        </h2>
-                        <p className="text-slate-600 text-xl font-sans mt-5">
-                          {product.description}
-                        </p>
-                      </div>
-                    </div>
-                  </Card>
+                  <Description product={product} />
                 </div>
               </div>
             </section>
@@ -142,6 +87,70 @@ const ProductDetails = (props) => {
         )
       )}
     </>
+  );
+};
+
+const ProductInfo = ({ product, category }) => {
+  return (
+    <div className="product-info-wrapper">
+      <h2 className="text-3xl font-bold text-slate-800 font-sans mt-5 lg:mt-5 ">
+        {product.name}
+      </h2>
+      <div className="rating wrapper mt-3 flex">
+        <Rating
+          value={product.rating}
+          text={product.rating.toFixed(1)}
+          isLarge
+        />
+        <span className="ml-1 text-lg font-semibold">
+          ({product.numReviews} Reviews)
+        </span>
+      </div>
+      <div className="block mt-4">
+        <Link href={`/category/${category.slug}`}>
+          <a className="text-slate-600 underline">{category.name}</a>
+        </Link>
+      </div>
+      <div className="mt-5  w-full lg:w-2/3">
+        <div className="flex flex-col">
+          <div className="price-wrapper ">
+            <span className="text-2xl font-semibold">
+              {localCurrency(product.price)}
+            </span>
+          </div>
+          <div className="product-info-wrapper flex justify-evenly items-center mt-5 w-full">
+            <Button variant="outline_gray" className="mx-3 w-1/3">
+              <i className="fa-regular fa-heart"></i>
+            </Button>
+
+            <Button variant="outline_gray" className="mx-3 w-1/3">
+              <i className="fa-solid fa-bag-shopping"></i>
+            </Button>
+
+            <Button variant="primary" className="mx-3 w-1/3">
+              Buy
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Description = ({ product }) => {
+  return (
+    <Card>
+      <div className="w-full flex flex-col">
+        <div className="product-description-wrapper">
+          <h2 className="text-3xl font-bold text-slate-800 font-sans">
+            Description
+          </h2>
+          <p className="text-slate-600 text-xl font-sans mt-5">
+            {product.description}
+          </p>
+        </div>
+      </div>
+    </Card>
   );
 };
 
