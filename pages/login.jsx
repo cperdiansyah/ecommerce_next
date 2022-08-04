@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Layout from '../components/templates/Layout';
 import Loader from '../components/atom/Loader';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import LoginForm from '../components/organisms/LoginForm';
 const Login = () => {
@@ -28,7 +28,7 @@ const Login = () => {
         ) : (
           <>
             {/* {error && <Message status="error" message={error} />} */}
-            <div className="form-wrapper mx-auto block w-[40%]">
+            <div className="form-wrapper mx-auto block lg:w-[40%]">
               <LoginForm />
             </div>
           </>

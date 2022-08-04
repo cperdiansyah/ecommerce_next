@@ -17,7 +17,7 @@ const Button = ({
   if (isLink) {
     return (
       <Link href={href}>
-        <a>
+        <a className={[className, disable ? 'disable' : ''].join(' ')}>
           <ButtonChakra
             colorScheme={color}
             variant={variant}
