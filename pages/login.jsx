@@ -4,28 +4,36 @@ import { useRouter } from 'next/router';
 
 import Layout from '../components/templates/Layout';
 import Loader from '../components/atom/Loader';
-import Message from '../components/atom/Message';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../redux/actions/userActions';
-import { userInfoSelector } from '../redux/reducers/userReducers';
 
 import LoginForm from '../components/organisms/LoginForm';
 const Login = () => {
-  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const auth = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(auth.isLoading);
+  /* Redux Selector */
+
+  useEffect(() => {
+    if (auth.isLogin) {
+      router.push('/');
+    }
+  }, [auth.isLogin]);
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Layout>
-          {/* {error && <Message status="error" message={error} />} */}
-          <div className="form-wrapper w-[40%] mx-auto block">
-            <LoginForm />
-          </div>
-        </Layout>
-      )}
+      <Layout>
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            {/* {error && <Message status="error" message={error} />} */}
+            <div className="form-wrapper mx-auto block w-[40%]">
+              <LoginForm />
+            </div>
+          </>
+        )}
+      </Layout>
     </>
   );
 };

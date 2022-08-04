@@ -38,13 +38,12 @@ const LoginForm = () => {
   /* State for password field */
   const [showPassword, setShowPassword] = useState(false);
   /* State for feedbackMessage */
+  const [isLoading, setIsLoading] = useState(true);
+
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const [messageStatus, setMessageStatus] = useState('');
-
-  /* Redux Selector */
-  const auth = useSelector((state) => state.auth);
 
   /* Action method */
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -114,12 +113,12 @@ const LoginForm = () => {
 
     return router.push('/');
   };
+
   return (
     <>
       {error && <Message status={messageStatus} message={feedbackMessage} />}
-
       <form onSubmit={submitHandler}>
-        <h1 className="text-3xl font-sans py-5 text-center text-primary font-bold">
+        <h1 className="py-5 text-center font-sans text-3xl font-bold text-primary">
           Login
         </h1>
         {loading ? (
@@ -175,8 +174,8 @@ const LoginForm = () => {
             <Button
               borderRadius={0}
               type="submit"
-              variant="solid"
-              className="bg-primary text-white rounded-lg py-5 text-lg"
+              variant="primary"
+              className="!rounded-lg bg-primary py-5 text-lg "
               width="full"
             >
               Login
@@ -184,7 +183,7 @@ const LoginForm = () => {
           </Stack>
         )}
       </form>
-      <Box className="text-right mt-5">
+      <Box className="mt-5 text-right">
         New to us?{' '}
         <Link href="/register">
           <a className="text-primary">Sign Up</a>
