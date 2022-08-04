@@ -32,14 +32,16 @@ const NavAuthButton = (props) => {
 
   return isLogin ? (
     <div className={`${className} flex items-center justify-between`}>
-      <div className="flex items-center">
+      <div className="flex w-full items-center lg:w-fit">
         {/*  <img
             src={user.avatar}
             alt="avatar"
             className="rounded-full w-8 h-8"
           /> */}
         <Link href="/profile" passHref>
-          <a className="mx-2">Hi, {username.split(' ')[0]}</a>
+          <a className="mx-2 w-full py-3 hover:bg-slate-100 lg:w-fit">
+            Hi, {username.split(' ')[0]}
+          </a>
         </Link>
       </div>
       <Button

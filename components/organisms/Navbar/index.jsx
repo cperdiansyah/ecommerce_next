@@ -155,7 +155,7 @@ const MenuLinks = ({ isDekstop, display }) => {
           >
             <MenuItem
               href="/"
-              className=" mx-auto flex w-full items-center lg:mr-5"
+              className=" mx-auto flex w-full  items-center  hover:opacity-70 lg:mr-5"
               isIcon
             >
               <i className="fa-regular fa-heart mr-1 w-full text-center text-xl text-red-500"></i>
@@ -163,7 +163,7 @@ const MenuLinks = ({ isDekstop, display }) => {
 
             <MenuItem
               href="/"
-              className="mx-auto flex w-full items-center lg:mr-5"
+              className="mx-auto flex w-full items-center hover:opacity-70 lg:mr-5"
               isIcon
             >
               <i className="fa-solid fa-bag-shopping w-full text-center text-xl text-secondary"></i>
