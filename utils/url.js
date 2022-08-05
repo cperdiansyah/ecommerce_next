@@ -6,6 +6,7 @@ const ROOT_URL =
     : process.env.NEXT_PUBLIC_BASE_URL;
 
 export const AUTH_URL = `${ROOT_URL}/api/auth`;
+
 export const PRODUCTS_URL = `${ROOT_URL}/api/products`;
 
 if (isProduction === 'development') {

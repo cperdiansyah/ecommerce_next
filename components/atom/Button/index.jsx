@@ -21,7 +21,7 @@ const Button = ({
           <ButtonChakra
             colorScheme={color}
             variant={variant}
-            className={[className, disable ? 'disable' : ''].join(' ')}
+            className={[disable ? 'disable' : ''].join(' ')}
           >
             {children}
           </ButtonChakra>

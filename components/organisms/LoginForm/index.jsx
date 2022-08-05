@@ -1,8 +1,9 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+
 import axios from 'axios';
+import nookies from 'nookies';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import nookies from 'nookies';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -25,6 +26,7 @@ import Loader from '../../atom/Loader';
 import { AUTH_URL } from '../../../utils/url';
 
 import { login } from '../../../redux/reducers/authReducers';
+import Cookies from 'js-cookie';
 
 const CFaLock = chakra(FaLock);
 const CFaaAt = chakra(FaAt);
@@ -109,6 +111,16 @@ const LoginForm = () => {
       maxAge: process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN || 60 * 60 * 7, // 7 Days
     });
 
+    /* Cookies.set('username', name, {
+      expires: process.env.NEXT_PUBLIC_JWT_COOKIE_IN || 20,
+    });
+    Cookies.set('accessToken', accessToken, {
+      expires: process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN || 60 * 60 * 7,
+    });
+    Cookies.set('refreshToken', refreshToken, {
+      expires: process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN || 60 * 60 * 7,
+    }); */
+
     dispatch(login());
 
     return router.push('/');
@@ -184,7 +196,8 @@ const LoginForm = () => {
         )}
       </form>
       <Box className="mt-5 text-right">
-        New to us?{' '}
+        New to us?
+{' '}
         <Link href="/register">
           <a className="text-primary">Sign Up</a>
         </Link>

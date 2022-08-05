@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import Head from 'next/head';
 import Footer from '../Footer';
@@ -38,7 +38,7 @@ const Layout = ({ children, pageTitle = ' ' }) => {
           </Head>
           <Navbar />
           <div className=" children-content">
-            <main className="min-h-max container py-28 lg:py-32">
+            <main className="container min-h-max py-28 lg:py-32">
               {children}
             </main>
           </div>
