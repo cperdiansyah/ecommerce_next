@@ -9,17 +9,9 @@ import { useSelector } from 'react-redux';
 
 import LoginForm from '../components/organisms/LoginForm';
 const Login = () => {
-  const router = useRouter();
   const auth = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(auth.isLoading);
-  /* Redux Selector */
-
-  useEffect(() => {
-    if (auth.isLogin) {
-      router.push('/');
-    }
-  }, [auth.isLogin]);
-
+ 
   return (
     <>
       <Layout>

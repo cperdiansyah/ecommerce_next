@@ -6,22 +6,33 @@ import Navbar from '../../organisms/Navbar';
 import Loader from '../../atom/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
-import { checkLogin, setLoading } from '../../../redux/reducers/authReducers';
+import { setLogin, setLoading } from '../../../redux/reducers/authReducers';
+import { axiosPublic } from '../../../service/axiosPublic';
+import { useState } from 'react';
 
 const Layout = ({ children, pageTitle = ' ' }) => {
+  const [refreshToken, setRefreshToken] = useState(null);
   const dispatch = useDispatch();
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [isLogin, setIsLogin] = useState(false);
-
   const auth = useSelector((state) => state.auth);
   const { isLoading, isLogin } = auth;
 
   const accessToken = Cookies.get('accessToken');
-  const refreshToken = Cookies.get('refreshToken');
 
   useEffect(() => {
-    if (accessToken || refreshToken) {
-      dispatch(checkLogin(true));
+    const refreshTokenData = async () => {
+      const refreshToken = await axiosPublic.get('/auth/checkToken');
+      return refreshToken.data.refreshToken;
+    };
+    setRefreshToken(refreshTokenData());
+  }, []);
+
+  console.log(refreshToken);
+  const token = accessToken || refreshToken;
+
+  // Intercept request to check login status if accessToken is expired
+  useEffect(() => {
+    if (token) {
+      dispatch(setLogin(true));
     }
 
     dispatch(setLoading(false));

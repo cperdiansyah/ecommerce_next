@@ -98,28 +98,16 @@ const LoginForm = () => {
     }
     feedback('success', 'Login Successful');
 
-    const { accessToken, refreshToken, name } = response.data;
-
+    const { accessToken, name } = response.data;
     // Set Cookies
     nookies.set(null, 'accessToken', accessToken, {
-      maxAge: process.env.NEXT_PUBLIC_JWT_COOKIE_IN || 20, // 20 seconds
-    });
-    nookies.set(null, 'refreshToken', refreshToken, {
-      maxAge: process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN || 60 * 60 * 7, // 7 Days
-    });
-    nookies.set(null, 'username', name, {
-      maxAge: process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN || 60 * 60 * 7, // 7 Days
+      maxAge: eval(process.env.NEXT_PUBLIC_JWT_COOKIE_IN) || 5 * 60, // 5 Minuites
     });
 
-    /* Cookies.set('username', name, {
-      expires: process.env.NEXT_PUBLIC_JWT_COOKIE_IN || 20,
+    nookies.set(null, 'username', name, {
+      maxAge:
+        eval(process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN) || 7 * 24 * 60 * 60, // 7 Days
     });
-    Cookies.set('accessToken', accessToken, {
-      expires: process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN || 60 * 60 * 7,
-    });
-    Cookies.set('refreshToken', refreshToken, {
-      expires: process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN || 60 * 60 * 7,
-    }); */
 
     dispatch(login());
 
@@ -196,8 +184,7 @@ const LoginForm = () => {
         )}
       </form>
       <Box className="mt-5 text-right">
-        New to us?
-{' '}
+        New to us?{' '}
         <Link href="/register">
           <a className="text-primary">Sign Up</a>
         </Link>
