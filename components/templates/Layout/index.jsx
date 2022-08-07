@@ -11,22 +11,14 @@ import { axiosPublic } from '../../../service/axiosPublic';
 import { useState } from 'react';
 
 const Layout = ({ children, pageTitle = ' ' }) => {
-  const [refreshToken, setRefreshToken] = useState(null);
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const { isLoading, isLogin } = auth;
 
-  const accessToken = Cookies.get('accessToken');
 
-  useEffect(() => {
-    const refreshTokenData = async () => {
-      const refreshToken = await axiosPublic.get('/auth/checkToken');
-      return refreshToken.data.refreshToken;
-    };
-    setRefreshToken(refreshTokenData());
-  }, []);
+  const refreshToken = Cookies.get('refreshToken');
+  const accessToken = Cookies.get('accessToken'); 
 
-  console.log(refreshToken);
   const token = accessToken || refreshToken;
 
   // Intercept request to check login status if accessToken is expired

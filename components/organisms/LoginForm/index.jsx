@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
 import nookies from 'nookies';
 import Link from 'next/link';
@@ -22,9 +22,9 @@ import { FaLock, FaAt } from 'react-icons/fa';
 
 import Message from '../../atom/Message';
 import Loader from '../../atom/Loader';
+import Feedback from '../../atom/Feedback';
 
 import { login } from '../../../redux/reducers/authReducers';
-import Feedback from '../../atom/Feedback';
 import { axiosPublic } from '../../../service/axiosPublic';
 
 const CFaLock = chakra(FaLock);
@@ -37,7 +37,6 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const { error, loading, feedback, feedbackMessage, messageStatus } =
     Feedback();
-
 
   /* State for password field */
   const [showPassword, setShowPassword] = useState(false);
@@ -65,7 +64,7 @@ const LoginForm = () => {
     }
     feedback('success', 'Login Successful');
 
-    const { accessToken, name } = response.data;
+    const { accessToken, name, refreshToken } = response.data;
 
     // Set Cookies
     nookies.set(null, 'accessToken', accessToken, {
@@ -73,6 +72,11 @@ const LoginForm = () => {
     });
 
     nookies.set(null, 'username', name, {
+      maxAge:
+        eval(process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN) || 7 * 24 * 60 * 60, // 7 Days
+    });
+
+    nookies.set(null, 'refreshToken', refreshToken, {
       maxAge:
         eval(process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN) || 7 * 24 * 60 * 60, // 7 Days
     });
