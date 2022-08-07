@@ -26,7 +26,8 @@ import Loader from '../../atom/Loader';
 import { AUTH_URL } from '../../../utils/url';
 
 import { login } from '../../../redux/reducers/authReducers';
-import Cookies from 'js-cookie';
+import Feedback from '../../atom/Feedback';
+const { error, loading, feedback } = Feedback;
 
 const CFaLock = chakra(FaLock);
 const CFaaAt = chakra(FaAt);
@@ -39,45 +40,9 @@ const LoginForm = () => {
 
   /* State for password field */
   const [showPassword, setShowPassword] = useState(false);
-  /* State for feedbackMessage */
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [feedbackMessage, setFeedbackMessage] = useState('');
-  const [messageStatus, setMessageStatus] = useState('');
 
   /* Action method */
   const handleShowClick = () => setShowPassword(!showPassword);
-
-  /* Feedback Method */
-  const feedbackReset = useCallback(() => {
-    setError(false);
-    setLoading(false);
-    setMessageStatus('');
-    setFeedbackMessage('');
-  }, [error, loading, feedbackMessage, messageStatus]);
-
-  const feedback = useCallback(
-    (
-      messageStatus = 'info',
-      messageFeedback = 'Something Went Wrong',
-      focusElement
-    ) => {
-      if (focusElement) {
-        focusElement.focus();
-      }
-
-      setLoading(true);
-      setError(true);
-      setMessageStatus(messageStatus);
-      setFeedbackMessage(messageFeedback);
-    }
-  );
-
-  useEffect(() => {
-    feedbackReset();
-  }, [feedbackMessage]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -99,6 +64,7 @@ const LoginForm = () => {
     feedback('success', 'Login Successful');
 
     const { accessToken, name } = response.data;
+
     // Set Cookies
     nookies.set(null, 'accessToken', accessToken, {
       maxAge: eval(process.env.NEXT_PUBLIC_JWT_COOKIE_IN) || 5 * 60, // 5 Minuites

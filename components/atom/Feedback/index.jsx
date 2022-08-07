@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const index = () => {
+const Feedback = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
@@ -38,7 +38,9 @@ const index = () => {
   return {
     feedbackReset,
     feedback,
+    error,
+    loading,
   };
 };
 
-export default index;
+export default Feedback;
