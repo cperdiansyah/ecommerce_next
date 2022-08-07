@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const Feedback = () => {
   const [error, setError] = useState(false);
@@ -36,10 +36,11 @@ const Feedback = () => {
   }, [feedbackMessage]);
 
   return {
-    feedbackReset,
     feedback,
     error,
     loading,
+    feedbackMessage,
+    messageStatus,
   };
 };
 

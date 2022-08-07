@@ -1,6 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 
-import axios from 'axios';
 import nookies from 'nookies';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -23,11 +22,10 @@ import { FaLock, FaAt } from 'react-icons/fa';
 
 import Message from '../../atom/Message';
 import Loader from '../../atom/Loader';
-import { AUTH_URL } from '../../../utils/url';
 
 import { login } from '../../../redux/reducers/authReducers';
 import Feedback from '../../atom/Feedback';
-const { error, loading, feedback } = Feedback;
+import { axiosPublic } from '../../../service/axiosPublic';
 
 const CFaLock = chakra(FaLock);
 const CFaaAt = chakra(FaAt);
@@ -37,6 +35,9 @@ const LoginForm = () => {
   const email = useRef(null);
   const password = useRef(null);
   const dispatch = useDispatch();
+  const { error, loading, feedback, feedbackMessage, messageStatus } =
+    Feedback();
+
 
   /* State for password field */
   const [showPassword, setShowPassword] = useState(false);
@@ -56,7 +57,8 @@ const LoginForm = () => {
     }
 
     /* Response if data  */
-    const response = await axios.post(`${AUTH_URL}/login`, data);
+    // const response = await axios.post(`${AUTH_URL}/login`, data);
+    const response = await axiosPublic.post('/auth/login', data);
 
     if (response.error) {
       return feedback('error', response.error);
@@ -83,6 +85,7 @@ const LoginForm = () => {
   return (
     <>
       {error && <Message status={messageStatus} message={feedbackMessage} />}
+
       <form onSubmit={submitHandler}>
         <h1 className="py-5 text-center font-sans text-3xl font-bold text-primary">
           Login
