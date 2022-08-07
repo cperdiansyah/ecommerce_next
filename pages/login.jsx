@@ -11,7 +11,10 @@ import LoginForm from '../components/organisms/LoginForm';
 const Login = () => {
   const auth = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(auth.isLoading);
- 
+
+  useEffect(() => {
+    setLoading(auth.isLoading);
+  }, [auth.isLoading]);
   return (
     <>
       <Layout>

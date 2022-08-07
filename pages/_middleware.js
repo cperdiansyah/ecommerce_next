@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 
 export default function middleware(req) {
   const { pathname } = req.nextUrl;
-  console.log(pathname.startsWith('/login'));
   const accessToken = req.cookies.accessToken;
 
   /* Middleware for prevent to login page after login */
