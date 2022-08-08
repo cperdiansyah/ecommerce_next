@@ -7,17 +7,14 @@ import Loader from '../../atom/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { setLogin, setLoading } from '../../../redux/reducers/authReducers';
-import { axiosPublic } from '../../../service/axiosPublic';
-import { useState } from 'react';
 
 const Layout = ({ children, pageTitle = ' ' }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const { isLoading, isLogin } = auth;
 
-
   const refreshToken = Cookies.get('refreshToken');
-  const accessToken = Cookies.get('accessToken'); 
+  const accessToken = Cookies.get('accessToken');
 
   const token = accessToken || refreshToken;
 

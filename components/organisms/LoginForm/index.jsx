@@ -56,7 +56,6 @@ const LoginForm = () => {
     }
 
     /* Response if data  */
-    // const response = await axios.post(`${AUTH_URL}/login`, data);
     const response = await axiosPublic.post('/auth/login', data);
 
     if (response.error) {
@@ -64,19 +63,14 @@ const LoginForm = () => {
     }
     feedback('success', 'Login Successful');
 
-    const { accessToken, name, refreshToken } = response.data;
+    const { accessToken, name } = response.data;
 
     // Set Cookies
     nookies.set(null, 'accessToken', accessToken, {
-      maxAge: eval(process.env.NEXT_PUBLIC_JWT_COOKIE_IN) || 5 * 60, // 5 Minuites
+      maxAge: eval(process.env.NEXT_PUBLIC_JWT_COOKIE_IN) || 5 * 60, // 5 Minuites,
     });
 
     nookies.set(null, 'username', name, {
-      maxAge:
-        eval(process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN) || 7 * 24 * 60 * 60, // 7 Days
-    });
-
-    nookies.set(null, 'refreshToken', refreshToken, {
       maxAge:
         eval(process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN) || 7 * 24 * 60 * 60, // 7 Days
     });
