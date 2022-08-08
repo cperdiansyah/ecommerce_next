@@ -27,6 +27,10 @@ a.active {
   box-sizing: border-box;
 }
 
+.add-transition {
+  @apply transition duration-300 ease-in-out;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
