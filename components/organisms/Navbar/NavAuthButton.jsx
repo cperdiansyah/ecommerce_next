@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../redux/reducers/authReducers';
 import Link from 'next/link';
+import { axiosPublic } from '../../../service/axiosPublic';
 
 const NavAuthButton = (props) => {
   const dispatch = useDispatch();
@@ -22,10 +23,12 @@ const NavAuthButton = (props) => {
 
   const className = [props.className].join(' ');
 
-  const onLogout = () => {
+  const onLogout = async () => {
     Cookies.remove('username');
     Cookies.remove('accessToken');
-    Cookies.remove('refreshToken');
+    Cookies.remove('isLogin');
+    await axiosPublic.post('/auth/logout');
+
     dispatch(logout());
     router.push('/');
   };

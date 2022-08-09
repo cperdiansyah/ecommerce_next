@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Loader from '../../components/atom/Loader';
 import ProductCard from '../../components/molecules/ProductCard';
@@ -6,8 +6,9 @@ import Layout from '../../components/templates/Layout';
 import ROOT_URL from '../../utils/url';
 import { fetch } from '../../utils/request';
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   const getProducts = await fetch(`${ROOT_URL}/api/product`);
+  // console.log(context);
   return {
     props: {
       productList: getProducts,
@@ -18,8 +19,12 @@ export async function getServerSideProps() {
 const Products = (props) => {
   const { productList } = props;
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [productList]);
 
   return (
     <>

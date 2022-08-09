@@ -11,16 +11,14 @@ import { setLogin, setLoading } from '../../../redux/reducers/authReducers';
 const Layout = ({ children, pageTitle = ' ' }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const { isLoading, isLogin } = auth;
-
-  const refreshToken = Cookies.get('refreshToken');
-  const accessToken = Cookies.get('accessToken');
-
-  const token = accessToken || refreshToken;
+  const { isLoading } = auth;
+  const isLogin = parseInt(Cookies.get('isLogin')) || false;
+  
+  
 
   // Intercept request to check login status if accessToken is expired
   useEffect(() => {
-    if (token) {
+    if (isLogin) {
       dispatch(setLogin(true));
     }
 
