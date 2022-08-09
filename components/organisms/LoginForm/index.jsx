@@ -40,8 +40,6 @@ const LoginForm = () => {
 
   /* State for password field */
   const [showPassword, setShowPassword] = useState(false);
-
-  /* Action method */
   const handleShowClick = () => setShowPassword(!showPassword);
 
   const submitHandler = async (e) => {
@@ -55,29 +53,30 @@ const LoginForm = () => {
       return feedback('error', 'Please fill all fields', email.current);
     }
 
-    /* Response if data  */
-    const response = await axiosPublic.post('/auth/login', data);
+    try {
+      /* fetch to login endpoint and get accesToken Form Resoponse  */
+      const response = await axiosPublic.post('/auth/login', data);
 
-    if (response.error) {
-      return feedback('error', response.error);
+      feedback('success', 'Login Successful');
+
+      const { accessToken, name } = response.data;
+
+      // Set Cookies
+      nookies.set(null, 'accessToken', accessToken, {
+        maxAge: eval(process.env.NEXT_PUBLIC_JWT_COOKIE_IN) || 5 * 60, // 5 Minuites,
+      });
+      nookies.set(null, 'username', name, {
+        maxAge:
+          eval(process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN) ||
+          7 * 24 * 60 * 60, // 7 Days
+      });
+      dispatch(login());
+
+      return router.push('/');
+    } catch (err) {
+      const { data } = err.response;
+      return feedback('error', data.massage);
     }
-    feedback('success', 'Login Successful');
-
-    const { accessToken, name } = response.data;
-
-    // Set Cookies
-    nookies.set(null, 'accessToken', accessToken, {
-      maxAge: eval(process.env.NEXT_PUBLIC_JWT_COOKIE_IN) || 5 * 60, // 5 Minuites,
-    });
-
-    nookies.set(null, 'username', name, {
-      maxAge:
-        eval(process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN) || 7 * 24 * 60 * 60, // 7 Days
-    });
-
-    dispatch(login());
-
-    return router.push('/');
   };
 
   return (

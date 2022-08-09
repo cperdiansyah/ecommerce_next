@@ -42,7 +42,7 @@ const NavAuthButton = (props) => {
             className="rounded-full w-8 h-8"
           /> */}
         <Link href="/profile" passHref>
-          <a className="mx-2 w-full py-3 hover:bg-slate-100 lg:w-fit">
+          <a className="mx-2 w-full py-3 capitalize hover:bg-slate-100 lg:w-fit">
             Hi, {username.split(' ')[0]}
           </a>
         </Link>
