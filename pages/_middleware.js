@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 export default function middleware(req) {
   const { pathname, origin } = req.nextUrl;
-  const accessToken = req.cookies.accessToken;
+  // const accessToken = req.cookies.accessToken;
   const refreshToken = req.cookies.refreshToken;
 
-  const token = accessToken || refreshToken;
+  const token = refreshToken;
 
   /* Middleware for prevent to Login page after login */
   if (token && pathname.startsWith('/login')) {
@@ -16,4 +16,5 @@ export default function middleware(req) {
     return NextResponse.next().cookie('isLogin', 1);
   }
   return NextResponse.next().cookie('isLogin', 0);
+  
 }

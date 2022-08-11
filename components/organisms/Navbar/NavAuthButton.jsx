@@ -1,21 +1,20 @@
-import React from 'react';
 import { useState } from 'react';
 
-import { useRouter } from 'next/router';
-import Button from '../../atom/Button';
-import Cookies from 'js-cookie';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../../redux/reducers/authReducers';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+import Button from '../../atom/Button';
 import { axiosPublic } from '../../../service/axiosPublic';
+import { logout } from '../../../redux/reducers/authReducers';
 
 const NavAuthButton = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const authSelector = useSelector((state) => state.auth);
-  const { isLogin } = authSelector;
+  const { isLogin, auth } = authSelector;
 
-  const username = Cookies.get('username');
+  const username = auth?.name.split(' ')[0] || null;
 
   const [user, setUser] = useState({
     avatar: '',
@@ -24,10 +23,10 @@ const NavAuthButton = (props) => {
   const className = [props.className].join(' ');
 
   const onLogout = async () => {
-    Cookies.remove('username');
-    Cookies.remove('accessToken');
     Cookies.remove('isLogin');
     await axiosPublic.post('/auth/logout');
+
+    localStorage.removeItem('accessToken');
 
     dispatch(logout());
     router.push('/');
@@ -43,7 +42,7 @@ const NavAuthButton = (props) => {
           /> */}
         <Link href="/profile" passHref>
           <a className="mx-2 w-full py-3 capitalize hover:bg-slate-100 lg:w-fit">
-            Hi, {username.split(' ')[0]}
+            Hi, {username}
           </a>
         </Link>
       </div>

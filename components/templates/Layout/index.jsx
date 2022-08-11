@@ -6,20 +6,27 @@ import Navbar from '../../organisms/Navbar';
 import Loader from '../../atom/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
-import { setLogin, setLoading } from '../../../redux/reducers/authReducers';
+import {
+  setLogin,
+  setLoading,
+  logout,
+} from '../../../redux/reducers/authReducers';
+import useAuth from '../../../hooks/useAuth';
 
 const Layout = ({ children, pageTitle = ' ' }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const { isLoading } = auth;
   const isLogin = parseInt(Cookies.get('isLogin')) || false;
-  
-  
 
-  // Intercept request to check login status if accessToken is expired
+  useAuth();
+
   useEffect(() => {
     if (isLogin) {
       dispatch(setLogin(true));
+    } else {
+      localStorage.removeItem('accessToken');
+      dispatch(logout());
     }
 
     dispatch(setLoading(false));

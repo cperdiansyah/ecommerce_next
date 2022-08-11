@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 
-import nookies from 'nookies';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import nookies from 'nookies';
+import jwtDecode from 'jwt-decode';
 
 import {
   Input,
@@ -24,7 +25,7 @@ import Message from '../../atom/Message';
 import Loader from '../../atom/Loader';
 import Feedback from '../../atom/Feedback';
 
-import { login } from '../../../redux/reducers/authReducers';
+import { login, setAuth } from '../../../redux/reducers/authReducers';
 import { axiosPublic } from '../../../service/axiosPublic';
 
 const CFaLock = chakra(FaLock);
@@ -32,6 +33,7 @@ const CFaaAt = chakra(FaAt);
 
 const LoginForm = () => {
   const router = useRouter();
+
   const email = useRef(null);
   const password = useRef(null);
   const dispatch = useDispatch();
@@ -59,23 +61,21 @@ const LoginForm = () => {
 
       feedback('success', 'Login Successful');
 
-      const { accessToken, name } = response.data;
+      const { accessToken } = response.data;
+      localStorage.setItem('accessToken', accessToken);
+      const decodedToken = jwtDecode(accessToken);
 
-      // Set Cookies
-      nookies.set(null, 'accessToken', accessToken, {
-        maxAge: eval(process.env.NEXT_PUBLIC_JWT_COOKIE_IN) || 5 * 60, // 5 Minuites,
-      });
-      nookies.set(null, 'username', name, {
-        maxAge:
-          eval(process.env.NEXT_PUBLIC_JWT_COOKIE_EXPIRES_IN) ||
-          7 * 24 * 60 * 60, // 7 Days
-      });
+      dispatch(setAuth(decodedToken));
+
       dispatch(login());
 
       return router.push('/');
     } catch (err) {
       const { data } = err.response;
-      return feedback('error', data.massage);
+      if (data) {
+        return feedback('error', data.massage);
+      }
+      return console.log(err);
     }
   };
 

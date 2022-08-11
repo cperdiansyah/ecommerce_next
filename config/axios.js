@@ -5,7 +5,7 @@ export default axios.create({
   baseURL: `${ROOT_URL}/api`,
 });
 
-export const axiosPublic = axios.create({
+export const axiosPrivate = axios.create({
   baseURL: `${ROOT_URL}/api`,
   withCredentials: true,
   headers: {

@@ -17,7 +17,9 @@ const Navbar = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [display, setDisplay] = useState('hidden');
   const [isDekstop, setIsDekstop] = useState(true);
-  const [windowSize, setWindowSize] = useState(window.innerWidth);
+  const [windowSize, setWindowSize] = useState(
+    typeof window !== 'undefined' && window.innerWidth
+  );
 
   const toggle = () => {
     setIsOpen(!isOpen);
