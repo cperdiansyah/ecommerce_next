@@ -1,5 +1,10 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { getProducts, getProductDetails } from '../actions/productActions';
+import {
+  getProducts,
+  getProductDetails,
+  getCarts,
+  getFavorites,
+} from '../actions/productActions';
 
 const productEntity = createEntityAdapter({
   selectId: (product) => product._id,
@@ -50,18 +55,31 @@ const product = createSlice({
     productCart: [],
     productFavorite: [],
   },
-  reducers: {
-    setProductCart(state, action) {
-      return {
-        ...state,
-        productCart: action.payload,
-      };
+  extraReducers: {
+    /* Cart Reducers */
+    [getCarts.pending.type]: (state, action) => {
+      state.loading = true;
     },
-    setProductFavorites(state, action) {
-      return {
-        ...state,
-        productFavorite: action.payload,
-      };
+    [getCarts.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.productCart = action.payload;
+    },
+    [getCarts.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    /* Favorites Reducers */
+    [getFavorites.pending.type]: (state, action) => {
+      state.loading = true;
+    },
+    [getFavorites.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.productFavorite = action.payload;
+    },
+    [getFavorites.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     },
   },
 });
@@ -73,8 +91,7 @@ export const productListSelector = productEntity.getSelectors(
 export const productDetailsSelector = productEntity.getSelectors(
   (state) => state.productDetail
 );
-
-export const { setProductCart } = product.actions;
+export const productCartSelector = (state) => state.products.productCart;
 
 /* Export reducer */
 export const productListReducer = productList.reducer;

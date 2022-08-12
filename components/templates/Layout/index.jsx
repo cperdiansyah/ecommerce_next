@@ -12,7 +12,8 @@ import {
   logout,
 } from '../../../redux/reducers/authReducers';
 import useAuth from '../../../hooks/useAuth';
-import { axiosPrivate } from '../../../config/axios';
+import { productCartSelector } from '../../../redux/reducers/productReducers';
+import { getCarts, getFavorites } from '../../../redux/actions/productActions';
 
 const Layout = ({ children, pageTitle = ' ' }) => {
   const dispatch = useDispatch();
@@ -22,19 +23,25 @@ const Layout = ({ children, pageTitle = ' ' }) => {
   useAuth();
 
   const fetchProducts = async () => {
-    const responseCart = await axiosPrivate.get('/cart');
-  }
+    // const { data: cartData } = await axiosPrivate.get('/cart');
+  };
+
+  const carts = useSelector(productCartSelector);
+
+  fetchProducts();
 
   useEffect(() => {
     if (isLogin) {
       dispatch(setLogin(true));
+      dispatch(getCarts());
+      dispatch(getFavorites());
     } else {
       localStorage.removeItem('accessToken');
       dispatch(logout());
     }
 
     dispatch(setLoading(false));
-  }, [isLoading, isLogin]);
+  }, [isLoading, isLogin, carts.productCart, carts.productFavorite]);
 
   return (
     <>
