@@ -2,6 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+
+import { useDispatch } from 'react-redux';
+
 import { Button } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
 
@@ -9,12 +13,13 @@ import Rating from '../Rating';
 
 import localCurrency from '../../../utils/localCurrency';
 import styles from './productCard.module.css';
-import { useRouter } from 'next/router';
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
+import { getCarts, getFavorites } from '../../../redux/actions/productActions';
 
 const ProductCard = ({ product }) => {
-  const isLogin = Cookies.get('isLogin');
   const router = useRouter();
+  const dispatch = useDispatch();
+  const isLogin = Cookies.get('isLogin');
   const axiosPrivate = useAxiosPrivate();
   const { _id: productId } = product;
 
@@ -37,6 +42,7 @@ const ProductCard = ({ product }) => {
         productId,
       });
       const { data } = response;
+      dispatch(getFavorites());
 
       console.log(data);
     }
