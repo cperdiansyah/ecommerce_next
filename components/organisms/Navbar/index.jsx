@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 const CloseIcon = chakra(AiOutlineClose);
-const MenuIcon = chakra(AiOutlineMenu);
+const MenuIcon = chakra(AiOutlineMenu); 
 
 const Navbar = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +58,6 @@ const Navbar = ({ className }) => {
           <MenuToggle isOpen={isOpen} toggle={toggle} />
         </div>
         <MenuLinks isDekstop={isDekstop} display={display} />
-        {/* <MenuLinksMobile display={display} /> */}
       </div>
     </nav>
   );

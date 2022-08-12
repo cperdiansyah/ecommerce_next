@@ -18,7 +18,6 @@ const Layout = ({ children, pageTitle = ' ' }) => {
   const auth = useSelector((state) => state.auth);
   const { isLoading } = auth;
   const isLogin = parseInt(Cookies.get('isLogin')) || false;
-
   useAuth();
 
   useEffect(() => {

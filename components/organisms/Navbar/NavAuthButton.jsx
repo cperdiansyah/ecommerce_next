@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import Button from '../../atom/Button';
-import { axiosPublic } from '../../../service/axiosPublic';
+
+import axios from '../../../config/axios';
 import { logout } from '../../../redux/reducers/authReducers';
 
 const NavAuthButton = (props) => {
@@ -24,9 +25,15 @@ const NavAuthButton = (props) => {
 
   const onLogout = async () => {
     Cookies.remove('isLogin');
-    await axiosPublic.post('/auth/logout');
-
     localStorage.removeItem('accessToken');
+    await axios.post(
+      '/auth/logout',
+      {},
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
 
     dispatch(logout());
     router.push('/');

@@ -1,9 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import nookies from 'nookies';
 import jwtDecode from 'jwt-decode';
 
 import {
@@ -25,20 +24,27 @@ import Message from '../../atom/Message';
 import Loader from '../../atom/Loader';
 import Feedback from '../../atom/Feedback';
 
+import axios from '../../../config/axios';
 import { login, setAuth } from '../../../redux/reducers/authReducers';
-import { axiosPublic } from '../../../service/axiosPublic';
 
 const CFaLock = chakra(FaLock);
 const CFaaAt = chakra(FaAt);
 
 const LoginForm = () => {
   const router = useRouter();
+  const query = router.query;
 
   const email = useRef(null);
   const password = useRef(null);
   const dispatch = useDispatch();
   const { error, loading, feedback, feedbackMessage, messageStatus } =
     Feedback();
+
+  useEffect(() => {
+    if (query.message) {
+      feedback(query.type, query.message);
+    }
+  }, [query]);
 
   /* State for password field */
   const [showPassword, setShowPassword] = useState(false);
@@ -57,7 +63,10 @@ const LoginForm = () => {
 
     try {
       /* fetch to login endpoint and get accesToken Form Resoponse  */
-      const response = await axiosPublic.post('/auth/login', data);
+      const response = await axios.post('/auth/login', data, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
 
       feedback('success', 'Login Successful');
 

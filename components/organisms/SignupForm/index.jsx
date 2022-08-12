@@ -20,7 +20,8 @@ import { useDispatch } from 'react-redux';
 
 import Message from '../../atom/Message';
 import Feedback from '../../atom/Feedback';
-import { axiosPublic } from '../../../service/axiosPublic';
+
+import axios from '../../../config/axios';
 import { login } from '../../../redux/reducers/authReducers';
 
 const CFaUserAlt = chakra(FaUserAlt);
@@ -68,7 +69,10 @@ const SignupForm = () => {
 
     try {
       /* fetch to signup endpoint and get accesToken Form Resoponse  */
-      const response = await axiosPublic.post('/auth/register', data);
+      const response = await axios.post('/auth/register', data, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
 
       feedback('success', 'Login Successful');
 

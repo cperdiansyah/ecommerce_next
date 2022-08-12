@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { axiosPrivate } from '../config/axios';
 import useAuth from './useAuth';
 import useRefreshToken from './useRefreshToken';
+
 const useAxiosPrivate = () => {
   const { auth } = useAuth();
   const refresh = useRefreshToken();
@@ -38,6 +39,7 @@ const useAxiosPrivate = () => {
       axiosPrivate.interceptors.response.eject(responseInterceptor);
     };
   }, [auth, refresh]);
+  
   return axiosPrivate;
 };
 

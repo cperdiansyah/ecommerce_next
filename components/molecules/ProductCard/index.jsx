@@ -3,12 +3,48 @@ import Link from 'next/link';
 
 import Image from 'next/image';
 import { Button } from '@chakra-ui/react';
+import Cookies from 'js-cookie';
+
 import Rating from '../Rating';
 
 import localCurrency from '../../../utils/localCurrency';
 import styles from './productCard.module.css';
+import { useRouter } from 'next/router';
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
 
 const ProductCard = ({ product }) => {
+  const isLogin = Cookies.get('isLogin');
+  const router = useRouter();
+  const axiosPrivate = useAxiosPrivate();
+  const { _id: productId } = product;
+
+  const loginCehck = () => {
+    if (!parseInt(isLogin)) {
+      return router.push({
+        pathname: '/login',
+        query: {
+          type: 'info',
+          message: 'Please login first',
+        },
+      });
+    }
+  };
+
+  const favoriteButtonHandler = async () => {
+    loginCehck();
+    if (parseInt(isLogin)) {
+      const response = await axiosPrivate.post(
+        `/product/${productId}/favorites`,
+        {
+          productId,
+        }
+      );
+      const { data } = response;
+
+      console.log(data);
+    }
+  };
+
   return (
     <div className={` ${styles['product-card']}`}>
       <Link href={`/product/${product._id}`}>
@@ -41,7 +77,7 @@ const ProductCard = ({ product }) => {
       </Link>
 
       <div className="product-info-wrapper z-3 mt-5 flex w-full items-center justify-evenly">
-        <Button variant="outline_gray">
+        <Button variant="outline_gray" onClick={favoriteButtonHandler}>
           <i className="fa-regular fa-heart"></i>
         </Button>
 

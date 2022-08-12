@@ -6,17 +6,18 @@ import { setAuth as setReduxAuth } from '../redux/reducers/authReducers';
 const useAuth = () => {
   const dispatch = useDispatch();
   let decodedToken;
+  const [auth, setAuth] = useState(decodedToken);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       decodedToken = jwtDecode(accessToken);
       dispatch(setReduxAuth(decodedToken));
+      setAuth({ ...decodedToken, accessToken });
     }
   }, [decodedToken]);
 
-  const [auth, setAuth] = useState(decodedToken);
-
+  // console.log(auth);
   return { auth, setAuth };
 };
 
