@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { userInfoReducer } from './reducers/userReducers';
 import authReducers from './reducers/authReducers';
+import { productReducer } from './reducers/productReducers';
 
 /* import {
   productListReducer,
@@ -15,6 +16,7 @@ import {
 const reducer = combineReducers({
   userInfo: userInfoReducer,
   auth: authReducers,
+  products: productReducer,
   /*   
   productList: productListReducer,
   productDetail: productDetailsReducer,

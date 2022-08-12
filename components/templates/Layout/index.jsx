@@ -12,6 +12,7 @@ import {
   logout,
 } from '../../../redux/reducers/authReducers';
 import useAuth from '../../../hooks/useAuth';
+import { axiosPrivate } from '../../../config/axios';
 
 const Layout = ({ children, pageTitle = ' ' }) => {
   const dispatch = useDispatch();
@@ -19,6 +20,10 @@ const Layout = ({ children, pageTitle = ' ' }) => {
   const { isLoading } = auth;
   const isLogin = parseInt(Cookies.get('isLogin')) || false;
   useAuth();
+
+  const fetchProducts = async () => {
+    const responseCart = await axiosPrivate.get('/cart');
+  }
 
   useEffect(() => {
     if (isLogin) {

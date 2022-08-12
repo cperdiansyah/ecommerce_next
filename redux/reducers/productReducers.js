@@ -44,6 +44,28 @@ const productDetail = createSlice({
   },
 });
 
+const product = createSlice({
+  name: 'product',
+  initialState: {
+    productCart: [],
+    productFavorite: [],
+  },
+  reducers: {
+    setProductCart(state, action) {
+      return {
+        ...state,
+        productCart: action.payload,
+      };
+    },
+    setProductFavorites(state, action) {
+      return {
+        ...state,
+        productFavorite: action.payload,
+      };
+    },
+  },
+});
+
 /* Export Selector */
 export const productListSelector = productEntity.getSelectors(
   (state) => state.productList
@@ -52,6 +74,9 @@ export const productDetailsSelector = productEntity.getSelectors(
   (state) => state.productDetail
 );
 
+export const { setProductCart } = product.actions;
+
 /* Export reducer */
 export const productListReducer = productList.reducer;
 export const productDetailsReducer = productDetail.reducer;
+export const productReducer = product.reducer;

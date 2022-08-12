@@ -33,12 +33,9 @@ const ProductCard = ({ product }) => {
   const favoriteButtonHandler = async () => {
     loginCehck();
     if (parseInt(isLogin)) {
-      const response = await axiosPrivate.post(
-        `/product/${productId}/favorites`,
-        {
-          productId,
-        }
-      );
+      const response = await axiosPrivate.post(`/favorite/${productId}`, {
+        productId,
+      });
       const { data } = response;
 
       console.log(data);
