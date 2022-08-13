@@ -38,16 +38,18 @@ const ProductCard = ({ product }) => {
   const favoriteButtonHandler = async () => {
     loginCehck();
     if (parseInt(isLogin)) {
-      const response = await axiosPrivate.post(`/favorite/${productId}`, {
-        productId,
-      });
-      const { data } = response;
+      const response = await axiosPrivate.post(`/favorite/${productId}`);
       dispatch(getFavorites());
-
-      console.log(data);
     }
   };
 
+  const cartButtonHandler = async () => {
+    loginCehck();
+    if (parseInt(isLogin)) {
+      const response = await axiosPrivate.post(`/cart/${productId}`);
+      dispatch(getCarts());
+    }
+  };
   return (
     <div className={` ${styles['product-card']}`}>
       <Link href={`/product/${product._id}`}>
@@ -84,7 +86,7 @@ const ProductCard = ({ product }) => {
           <i className="fa-regular fa-heart"></i>
         </Button>
 
-        <Button variant="outline_gray">
+        <Button variant="outline_gray" onClick={cartButtonHandler}>
           <i className="fa-solid fa-bag-shopping"></i>
         </Button>
 
