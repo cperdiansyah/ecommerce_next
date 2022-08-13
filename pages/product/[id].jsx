@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '@chakra-ui/react';
 
@@ -14,26 +16,28 @@ import Card from '../../components/atom/Card';
 
 import localCurrency from '../../utils/localCurrency';
 
-import ROOT_URL from '../../utils/url';
-import { fetch } from '../../utils/request';
+import Cookies from 'js-cookie';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { getCarts, getFavorites } from '../../redux/actions/productActions';
+import axios from '../../config/axios';
+import { productFavoriteSelector } from '../../redux/reducers/productReducers';
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
-
-  const getProductDetails = await fetch(`${ROOT_URL}/api/product/${id}`);
-  const categoryId = getProductDetails.category;
-  const getCategory = await fetch(`${ROOT_URL}/api/category/${categoryId}`);
+  const { data } = await axios.get(`/product/${id}`, {
+    withCredentials: true,
+  });
 
   return {
     props: {
-      product: getProductDetails,
-      category: getCategory,
+      product: data,
     },
   };
 }
 
 const ProductDetails = (props) => {
-  const { product, category } = props;
+  const { product } = props;
+  const { category } = product;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -42,8 +46,7 @@ const ProductDetails = (props) => {
       {loading ? (
         <Loader />
       ) : (
-        product &&
-        category && (
+        product && (
           <Layout>
             {error && <Message status="error" message={error} />}
             {/* Product */}
@@ -52,7 +55,7 @@ const ProductDetails = (props) => {
                 <div className="categories-wrapper">
                   {/* Product Details Top */}
                   <Card className="mb-10">
-                    <div className="w-full flex flex-wrap flex-col lg:flex-row ">
+                    <div className="flex w-full flex-col flex-wrap lg:flex-row ">
                       {/* Image Wrapper */}
                       <div className="product-image-view-wrapper mx-auto lg:mx-0 lg:pr-10 ">
                         <div className="image-wrapper ">
@@ -91,9 +94,55 @@ const ProductDetails = (props) => {
 };
 
 const ProductInfo = ({ product, category }) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const isLogin = Cookies.get('isLogin');
+  const axiosPrivate = useAxiosPrivate();
+  const [favorite, setFavorite] = useState(false);
+  const { _id: productId } = product;
+
+  const favoriteState = useSelector(productFavoriteSelector).filter(
+    (item) => item.product._id === productId
+  );
+  
+  useEffect(() => {
+    if (favoriteState.length > 0) {
+      setFavorite(true);
+    }
+  }, [productId]);
+
+
+  const loginCehck = () => {
+    if (!parseInt(isLogin)) {
+      return router.push({
+        pathname: '/login',
+        query: {
+          type: 'info',
+          message: 'Please login first',
+        },
+      });
+    }
+  };
+
+  const favoriteButtonHandler = async () => {
+    loginCehck();
+    if (parseInt(isLogin)) {
+      const response = await axiosPrivate.post(`/favorite/${productId}`);
+      setFavorite(!favorite);
+      dispatch(getFavorites());
+    }
+  };
+
+  const cartButtonHandler = async () => {
+    loginCehck();
+    if (parseInt(isLogin)) {
+      const response = await axiosPrivate.post(`/cart/${productId}`);
+      dispatch(getCarts());
+    }
+  };
   return (
     <div className="product-info-wrapper">
-      <h2 className="text-3xl font-bold text-slate-800 font-sans mt-5 lg:mt-5 ">
+      <h2 className="mt-5 font-sans text-3xl font-bold text-slate-800 lg:mt-5 ">
         {product.name}
       </h2>
       <div className="rating wrapper mt-3 flex">
@@ -106,7 +155,7 @@ const ProductInfo = ({ product, category }) => {
           ({product.numReviews} Reviews)
         </span>
       </div>
-      <div className="block mt-4">
+      <div className="mt-4 block">
         <Link href={`/category/${category.slug}`}>
           <a className="text-slate-600 underline">{category.name}</a>
         </Link>
@@ -118,12 +167,24 @@ const ProductInfo = ({ product, category }) => {
               {localCurrency(product.price)}
             </span>
           </div>
-          <div className="product-info-wrapper flex justify-evenly items-center mt-5 w-full">
-            <Button variant="outline_gray" className="mx-3 w-1/3">
-              <i className="fa-regular fa-heart"></i>
+          <div className="product-info-wrapper mt-5 flex w-full items-center justify-evenly">
+            <Button
+              variant="outline_gray"
+              className="mx-3 w-1/3"
+              onClick={favoriteButtonHandler}
+            >
+              {favorite ? (
+                <i class="fa-solid fa-heart"></i>
+              ) : (
+                <i className="fa-regular fa-heart"></i>
+              )}
             </Button>
 
-            <Button variant="outline_gray" className="mx-3 w-1/3">
+            <Button
+              variant="outline_gray"
+              className="mx-3 w-1/3"
+              onClick={cartButtonHandler}
+            >
               <i className="fa-solid fa-bag-shopping"></i>
             </Button>
 
@@ -140,12 +201,12 @@ const ProductInfo = ({ product, category }) => {
 const Description = ({ product }) => {
   return (
     <Card>
-      <div className="w-full flex flex-col">
+      <div className="flex w-full flex-col">
         <div className="product-description-wrapper">
-          <h2 className="text-3xl font-bold text-slate-800 font-sans">
+          <h2 className="font-sans text-3xl font-bold text-slate-800">
             Description
           </h2>
-          <p className="text-slate-600 text-xl font-sans mt-5">
+          <p className="mt-5 font-sans text-xl text-slate-600">
             {product.description}
           </p>
         </div>

@@ -26,5 +26,6 @@ const reducer = combineReducers({
 
 export const store = configureStore({
   reducer,
-  devTools: process.env.NEXT_PUBLIC_NODE_ENV === 'production' ? false : true,
+  devTools:
+    process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? true : false || false,
 });

@@ -92,6 +92,7 @@ export const productDetailsSelector = productEntity.getSelectors(
   (state) => state.productDetail
 );
 export const productCartSelector = (state) => state.products.productCart;
+export const productFavoriteSelector = (state) => state.products.productFavorite;
 
 /* Export reducer */
 export const productListReducer = productList.reducer;
