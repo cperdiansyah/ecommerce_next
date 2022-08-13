@@ -104,13 +104,12 @@ const ProductInfo = ({ product, category }) => {
   const favoriteState = useSelector(productFavoriteSelector).filter(
     (item) => item.product._id === productId
   );
-  
+
   useEffect(() => {
     if (favoriteState.length > 0) {
       setFavorite(true);
     }
   }, [productId]);
-
 
   const loginCehck = () => {
     if (!parseInt(isLogin)) {
@@ -174,7 +173,7 @@ const ProductInfo = ({ product, category }) => {
               onClick={favoriteButtonHandler}
             >
               {favorite ? (
-                <i class="fa-solid fa-heart"></i>
+                <i class="fa-solid fa-heart text-rose-500"></i>
               ) : (
                 <i className="fa-regular fa-heart"></i>
               )}

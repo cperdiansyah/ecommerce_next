@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
@@ -15,13 +15,26 @@ import localCurrency from '../../../utils/localCurrency';
 import styles from './productCard.module.css';
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
 import { getCarts, getFavorites } from '../../../redux/actions/productActions';
+import { productFavoriteSelector } from '../../../redux/reducers/productReducers';
 
 const ProductCard = ({ product }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [favorite, setFavorite] = useState(false);
+
   const isLogin = Cookies.get('isLogin');
   const axiosPrivate = useAxiosPrivate();
   const { _id: productId } = product;
+
+  const favoriteState = useSelector(productFavoriteSelector).filter(
+    (item) => item.product._id === productId
+  );
+
+  useEffect(() => {
+    if (favoriteState.length > 0) {
+      setFavorite(true);
+    }
+  }, [productId]);
 
   const loginCehck = () => {
     if (!parseInt(isLogin)) {
@@ -39,6 +52,8 @@ const ProductCard = ({ product }) => {
     loginCehck();
     if (parseInt(isLogin)) {
       const response = await axiosPrivate.post(`/favorite/${productId}`);
+      setFavorite(!favorite);
+
       dispatch(getFavorites());
     }
   };
@@ -83,7 +98,11 @@ const ProductCard = ({ product }) => {
 
       <div className="product-info-wrapper z-3 mt-5 flex w-full items-center justify-evenly">
         <Button variant="outline_gray" onClick={favoriteButtonHandler}>
-          <i className="fa-regular fa-heart"></i>
+          {favorite ? (
+            <i class="fa-solid fa-heart text-rose-500"></i>
+          ) : (
+            <i className="fa-regular fa-heart"></i>
+          )}
         </Button>
 
         <Button variant="outline_gray" onClick={cartButtonHandler}>
