@@ -7,13 +7,17 @@ import Loader from '../components/atom/Loader';
 import Message from '../components/atom/Message';
 
 import Layout from '../components/templates/Layout';
-import QuantityControl from '../components/atom/QuantityControl';
+import ProductCartItem from '../components/molecules/ProductCartitem';
+import { useSelector } from 'react-redux';
 
 const favorites = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const imageExample = 'phone.jpg';
+  const productCartSelector = useSelector(
+    (state) => state.products.productCart
+  );
+
   const cartCheckoutHandler = () => {
     console.log('cartCheckoutHandler');
   };
@@ -33,69 +37,9 @@ const favorites = () => {
                 <div className=" mt-7 flex w-full flex-col justify-between md:flex-row">
                   <div className="products-cart-list-wrapper mb-7 w-full md:mb-0 md:w-3/4">
                     <Card className=" md:mr-7 ">
-                      <div className="flex flex-row items-center justify-between">
-                        <div className="checkbox-wrapper">
-                          <Checkbox />
-                        </div>
-
-                        <div className="product-wrapper flex items-center">
-                          <div className="product-image-wrapper ">
-                            <div className="image-wrapper relative mx-2 h-28 w-36 lg:h-40">
-                              <Image
-                                src={`/products/${imageExample}`}
-                                blurDataURL={`/products/${imageExample}`}
-                                alt="product"
-                                layout="fill"
-                                className="rounded-xl"
-                                objectFit="contain"
-                                placeholder="blur"
-                                position="relative"
-                              />
-                            </div>
-                          </div>
-                          <div className="product-info-wrapper mx-2 max-w-md">
-                            <div className="product-price-wrapper">
-                              <h3 className="font-sans text-base font-semibold text-slate-700">
-                                Rp 1.400.000
-                              </h3>
-                            </div>
-                            <div className="product-text-wrapper">
-                              <h3 className="font-sans text-lg font-bold text-slate-800">
-                                Airpods Wireless Bluetooth Headphones
-                              </h3>
-                              <p
-                                className="text-sm text-slate-600 line-clamp-2"
-                                title="Bluetooth technology lets you connect it with
-                                compatible devices wirelessly High-quality AAC
-                                audio offers immersive listening experience
-                                Built-in microphone allows you to take calls
-                                while working"
-                              >
-                                Bluetooth technology lets you connect it with
-                                compatible devices wirelessly High-quality AAC
-                                audio offers immersive listening experience
-                                Built-in microphone allows you to take calls
-                                while working
-                              </p>
-                            </div>
-
-                            <div className="product-buton-wrapper">
-                              <Button variant="no_border">
-                                <i className="fa-regular fa-heart mr-3"></i>
-                                Add to favorites
-                              </Button>
-                            </div>
-                          </div>
-
-                          <div className="product-quantity-control-wrapper">
-                            <QuantityControl
-                              defaultValue={1}
-                              min={1}
-                              max={10}
-                            />
-                          </div>
-                        </div>
-                      </div>
+                      {productCartSelector.map((product) => (
+                        <ProductCartItem {...product} />
+                      ))}
                     </Card>
                   </div>
                   <div className="products-bill-wrapper w-full  md:w-1/4">
