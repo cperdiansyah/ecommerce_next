@@ -17,6 +17,7 @@ const useAuth = () => {
   const [accessToken, setAccessToken] = useState(getFromStorage('accessToken'));
 
   useEffect(() => {
+    setAccessToken(localStorage.getItem('accessToken'));
     if (accessToken) {
       decodedToken = jwtDecode(accessToken);
       dispatch(setReduxAuth(decodedToken));

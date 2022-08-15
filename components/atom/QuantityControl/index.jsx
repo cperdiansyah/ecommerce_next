@@ -22,9 +22,13 @@ const QuantityControl = ({
 
   return (
     <HStack maxW="320px">
-      <Button {...dec}>-</Button>
-      <Input {...input} textAlign="center" />
-      <Button {...inc}>+</Button>
+      <Button {...dec} variant="outline">
+        -
+      </Button>
+      <Input {...input} colorScheme="orange" textAlign="center" />
+      <Button {...inc} variant="outline">
+        +
+      </Button>
     </HStack>
   );
 };

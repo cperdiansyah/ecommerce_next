@@ -9,7 +9,7 @@ const ProductCartItem = (props) => {
   return (
     <div className="flex flex-row items-center justify-between">
       <div className="checkbox-wrapper">
-        <Checkbox />
+        <Checkbox size="lg" colorScheme="orange" />
       </div>
 
       <div className="product-wrapper flex items-center">

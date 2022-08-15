@@ -1,5 +1,8 @@
 import { extendTheme } from '@chakra-ui/react';
 import Button from './components/Button';
+import Checkbox from './components/Checkbox';
+import Input from './components/Input';
+
 const customTheme = extendTheme({
   fontSizes: {
     lg: '20px',
@@ -22,6 +25,8 @@ const customTheme = extendTheme({
   },
   components: {
     Button,
+    ...Input,
+    ...Checkbox,
   },
 });
 

@@ -1,10 +1,13 @@
 import axios from 'axios';
 import ROOT_URL from '../utils/url';
 
-let accessToken;
-if (typeof window !== 'undefined') {
-  accessToken = localStorage.getItem('accessToken');
-}
+const getFromStorage = (key) => {
+  if (typeof window !== 'undefined') {
+    return window.localStorage.getItem(key);
+  }
+};
+
+const accessToken = getFromStorage('accessToken');
 
 export default axios.create({
   baseURL: `${ROOT_URL}/api`,
