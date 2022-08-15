@@ -173,7 +173,7 @@ const ProductInfo = ({ product, category }) => {
               onClick={favoriteButtonHandler}
             >
               {favorite ? (
-                <i class="fa-solid fa-heart text-rose-500"></i>
+                <i className="fa-solid fa-heart text-rose-400"></i>
               ) : (
                 <i className="fa-regular fa-heart"></i>
               )}

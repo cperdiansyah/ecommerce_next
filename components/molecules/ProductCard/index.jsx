@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
     if (favoriteState.length > 0) {
       setFavorite(true);
     }
-  }, [productId]);
+  }, [productId, favoriteState.length]);
 
   const loginCehck = () => {
     if (!parseInt(isLogin)) {
@@ -51,10 +51,9 @@ const ProductCard = ({ product }) => {
   const favoriteButtonHandler = async () => {
     loginCehck();
     if (parseInt(isLogin)) {
-      const response = await axiosPrivate.post(`/favorite/${productId}`);
-      setFavorite(!favorite);
-
+      await axiosPrivate.post(`/favorite/${productId}`);
       dispatch(getFavorites());
+      setFavorite(!favorite);
     }
   };
 
@@ -99,7 +98,7 @@ const ProductCard = ({ product }) => {
       <div className="product-info-wrapper z-3 mt-5 flex w-full items-center justify-evenly">
         <Button variant="outline_gray" onClick={favoriteButtonHandler}>
           {favorite ? (
-            <i class="fa-solid fa-heart text-rose-500"></i>
+            <i className="fa-solid fa-heart text-rose-400"></i>
           ) : (
             <i className="fa-regular fa-heart"></i>
           )}

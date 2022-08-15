@@ -2,7 +2,7 @@ import axios from 'axios';
 import ROOT_URL from '../utils/url';
 
 let accessToken;
-
+console.log(typeof window);
 if (typeof window !== 'undefined') {
   accessToken = localStorage.getItem('accessToken');
 }

@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 const CloseIcon = chakra(AiOutlineClose);
-const MenuIcon = chakra(AiOutlineMenu); 
+const MenuIcon = chakra(AiOutlineMenu);
 
 const Navbar = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -109,7 +109,7 @@ const MenuLinks = ({ isDekstop, display }) => {
             className={`nav-button  flex items-center justify-between lg:w-1/2`}
           >
             <MenuItem
-              href="/"
+              href="/favorites"
               className=" mx-auto flex w-full items-center lg:mr-5 lg:w-fit"
               isIcon
             >
@@ -117,7 +117,7 @@ const MenuLinks = ({ isDekstop, display }) => {
             </MenuItem>
 
             <MenuItem
-              href="/"
+              href="/cart"
               className="mx-auto flex w-full items-center lg:mr-5 lg:w-fit"
               isIcon
             >
