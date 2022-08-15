@@ -55,6 +55,16 @@ const Button = {
         backgroundColor: 'gray.200',
       },
     },
+    no_border: {
+      backgroundColor: 'transparent',
+      color: 'gray.500',
+      _hover: {
+        backgroundColor: 'gray.100',
+      },
+      _active: {
+        backgroundColor: 'gray.200',
+      },
+    },
   },
 };
 

@@ -7,7 +7,14 @@ const useAuth = () => {
   const dispatch = useDispatch();
   let decodedToken;
   const [auth, setAuth] = useState(decodedToken);
-  const accessToken = localStorage.getItem('accessToken');
+
+  const getFromStorage = (key) => {
+    if (typeof window !== 'undefined') {
+      return window.localStorage.getItem(key);
+    }
+  };
+
+  const [accessToken, setAccessToken] = useState(getFromStorage('accessToken'));
 
   useEffect(() => {
     if (accessToken) {
@@ -17,7 +24,6 @@ const useAuth = () => {
     }
   }, [accessToken]);
 
-  // console.log(auth);
   return { auth, setAuth };
 };
 
