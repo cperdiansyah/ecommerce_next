@@ -1,11 +1,20 @@
 import { Button, Checkbox } from '@chakra-ui/react';
 import Image from 'next/image';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteCarts } from '../../../redux/actions/productActions';
 import localCurrency from '../../../utils/localCurrency';
 import QuantityControl from '../../atom/QuantityControl';
 
 const ProductCartItem = (props) => {
+  const dispatch = useDispatch();
+  // console.log(props);
   const { product, quantity, _id: id } = props;
+
+  const deleteCartHandler = () => {
+    dispatch(deleteCarts(id));
+  };
+
   return (
     <div className="flex flex-row items-center justify-between">
       <div className="checkbox-wrapper">
@@ -51,7 +60,7 @@ const ProductCartItem = (props) => {
               Add to favorites
             </Button>
 
-            <Button variant="no_border">
+            <Button variant="no_border" onClick={deleteCartHandler}>
               <i className="fa-regular fa-trash-can mr-2"></i>
               Delete
             </Button>

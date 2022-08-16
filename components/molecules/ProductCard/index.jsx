@@ -14,7 +14,11 @@ import Rating from '../Rating';
 import localCurrency from '../../../utils/localCurrency';
 import styles from './productCard.module.css';
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
-import { getCarts, getFavorites } from '../../../redux/actions/productActions';
+import {
+  addCarts,
+  getCarts,
+  getFavorites,
+} from '../../../redux/actions/productActions';
 import { productFavoriteSelector } from '../../../redux/reducers/productReducers';
 
 const ProductCard = ({ product }) => {
@@ -60,7 +64,8 @@ const ProductCard = ({ product }) => {
   const cartButtonHandler = async () => {
     loginCehck();
     if (parseInt(isLogin)) {
-      const response = await axiosPrivate.post(`/cart/${productId}`);
+      // const response = await axiosPrivate.post(`/cart/${productId}`);
+      dispatch(addCarts(product));
       dispatch(getCarts());
     }
   };

@@ -4,6 +4,8 @@ import {
   getProductDetails,
   getCarts,
   getFavorites,
+  updateQtyCarts,
+  addCarts,
 } from '../actions/productActions';
 
 const productEntity = createEntityAdapter({
@@ -69,6 +71,32 @@ const product = createSlice({
       state.error = action.payload;
     },
 
+    /* Add Cart Reducers */
+    [addCarts.pending.type]: (state, action) => {
+      state.loading = true;
+    },
+    [addCarts.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.productCart = action.payload;
+    },
+    [addCarts.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    /* Update Cart Reducers */
+    [updateQtyCarts.pending.type]: (state, action) => {
+      state.loading = true;
+    },
+    [updateQtyCarts.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.productCart = action.payload;
+    },
+    [updateQtyCarts.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     /* Favorites Reducers */
     [getFavorites.pending.type]: (state, action) => {
       state.loading = true;
@@ -92,7 +120,8 @@ export const productDetailsSelector = productEntity.getSelectors(
   (state) => state.productDetail
 );
 export const productCartSelector = (state) => state.products.productCart;
-export const productFavoriteSelector = (state) => state.products.productFavorite;
+export const productFavoriteSelector = (state) =>
+  state.products.productFavorite;
 
 /* Export reducer */
 export const productListReducer = productList.reducer;
