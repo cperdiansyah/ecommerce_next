@@ -13,7 +13,7 @@ export const axiosPrivate = axios.create({
   baseURL: `${ROOT_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
+    // Authorization: `Bearer ${token}`,
   },
   withCredentials: true,
 });

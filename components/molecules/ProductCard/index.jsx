@@ -14,18 +14,16 @@ import Rating from '../Rating';
 import localCurrency from '../../../utils/localCurrency';
 import styles from './productCard.module.css';
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
-import {
-  addCarts,
-  getCarts,
-  getFavorites,
-} from '../../../redux/actions/productActions';
 import { productFavoriteSelector } from '../../../redux/reducers/productReducers';
+import favoriteHooks from '../../../hooksRedux/favoriteHooks';
+import cartHooks from '../../../hooksRedux/cartHooks';
 
 const ProductCard = ({ product }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const [favorite, setFavorite] = useState(false);
+  const { getFavorites, addFavorite } = favoriteHooks();
+  const { getCarts, addCarts } = cartHooks();
 
+  const [favorite, setFavorite] = useState(false);
   const isLogin = Cookies.get('isLogin');
   const axiosPrivate = useAxiosPrivate();
   const { _id: productId } = product;
@@ -55,8 +53,8 @@ const ProductCard = ({ product }) => {
   const favoriteButtonHandler = async () => {
     loginCehck();
     if (parseInt(isLogin)) {
-      await axiosPrivate.post(`/favorite/${productId}`);
-      dispatch(getFavorites());
+      addFavorite(product);
+      getFavorites();
       setFavorite(!favorite);
     }
   };
@@ -65,8 +63,8 @@ const ProductCard = ({ product }) => {
     loginCehck();
     if (parseInt(isLogin)) {
       // const response = await axiosPrivate.post(`/cart/${productId}`);
-      dispatch(addCarts(product));
-      dispatch(getCarts());
+      addCarts(product);
+      getCarts();
     }
   };
   return (

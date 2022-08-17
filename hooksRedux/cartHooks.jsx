@@ -10,7 +10,15 @@ const cartHooks = () => {
     const { data: cartData } = await axiosPrivate.get('/cart');
     dispatch(cartsState(cartData.data));
   };
-  return { getCarts };
+
+  const addCarts = async (product) => {
+    const { data: cartData } = await axiosPrivate.post(
+      `cart/${product._id}`,
+      product
+    );
+    dispatch(cartsState(cartData.data));
+  };
+  return { getCarts, addCarts };
 };
 
 export default cartHooks;

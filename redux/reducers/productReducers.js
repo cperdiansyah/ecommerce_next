@@ -76,49 +76,6 @@ const product = createSlice({
       state.error = action.payload;
     },
 
-    /* Cart Reducers */
-    [getCarts.pending.type]: (state, action) => {
-      state.loading = true;
-    },
-    [getCarts.fulfilled.type]: (state, action) => {
-      state.loading = false;
-      state.productCart = action.payload;
-    },
-    [getCarts.rejected.type]: (state, action) => {
-      // console.log(action.payload);
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
-    },
-
-    /* Add Cart Reducers */
-    [addCarts.pending.type]: (state, action) => {
-      state.loading = true;
-    },
-    [addCarts.fulfilled.type]: (state, action) => {
-      state.loading = false;
-      state.productCart = action.payload;
-    },
-    [addCarts.rejected.type]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-
-    /* Update Cart Reducers */
-    [updateQtyCarts.pending.type]: (state, action) => {
-      state.loading = true;
-    },
-    [updateQtyCarts.fulfilled.type]: (state, action) => {
-      state.loading = false;
-      state.productCart = action.payload;
-    },
-    [updateQtyCarts.rejected.type]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-
     /* Favorites Reducers */
     [favoritesState.pending.type]: (state, action) => {
       state.loading = true;
@@ -130,18 +87,6 @@ const product = createSlice({
     },
 
     [favoritesState.rejected.type]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-
-    [getFavorites.pending.type]: (state, action) => {
-      state.loading = true;
-    },
-    [getFavorites.fulfilled.type]: (state, action) => {
-      state.loading = false;
-      state.productFavorite = action.payload;
-    },
-    [getFavorites.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },

@@ -11,7 +11,15 @@ const favoriteHooks = () => {
     dispatch(favoritesState(favorite.data));
   };
 
-  return { getFavorites };
+  const addFavorite = async (product) => {
+    const { data: favorite } = await axiosPrivate.post(
+      `favorite/${product._id}`,
+      product
+    );
+    dispatch(favoritesState(favorite.data));
+  };
+
+  return { getFavorites, addFavorite };
 };
 
 export default favoriteHooks;
