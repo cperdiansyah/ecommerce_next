@@ -6,6 +6,8 @@ import {
   getFavorites,
   updateQtyCarts,
   addCarts,
+  cartsState,
+  favoritesState,
 } from '../actions/productActions';
 
 const productEntity = createEntityAdapter({
@@ -56,8 +58,24 @@ const product = createSlice({
   initialState: {
     productCart: [],
     productFavorite: [],
+    error: null,
   },
   extraReducers: {
+    /* Cart Reducers */
+    [cartsState.pending.type]: (state, action) => {
+      state.loading = true;
+    },
+
+    [cartsState.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.productCart = action.payload;
+    },
+
+    [cartsState.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     /* Cart Reducers */
     [getCarts.pending.type]: (state, action) => {
       state.loading = true;
@@ -67,8 +85,12 @@ const product = createSlice({
       state.productCart = action.payload;
     },
     [getCarts.rejected.type]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+      // console.log(action.payload);
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     },
 
     /* Add Cart Reducers */
@@ -98,6 +120,20 @@ const product = createSlice({
     },
 
     /* Favorites Reducers */
+    [favoritesState.pending.type]: (state, action) => {
+      state.loading = true;
+    },
+
+    [favoritesState.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.productFavorite = action.payload;
+    },
+
+    [favoritesState.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     [getFavorites.pending.type]: (state, action) => {
       state.loading = true;
     },

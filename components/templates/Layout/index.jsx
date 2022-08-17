@@ -11,12 +11,18 @@ import {
   setLoading,
   logout,
 } from '../../../redux/reducers/authReducers';
+
 import useAuth from '../../../hooks/useAuth';
 import { productCartSelector } from '../../../redux/reducers/productReducers';
-import { getCarts, getFavorites } from '../../../redux/actions/productActions';
+
+import cartHooks from '../../../hooksRedux/cartHooks';
+import favoriteHooks from '../../../hooksRedux/favoriteHooks';
 
 const Layout = ({ children, pageTitle = ' ' }) => {
   const dispatch = useDispatch();
+  const { getCarts } = cartHooks();
+  const { getFavorites } = favoriteHooks();
+
   const auth = useSelector((state) => state.auth);
   const { isLoading } = auth;
   const isLogin = parseInt(Cookies.get('isLogin')) || false;
@@ -33,8 +39,8 @@ const Layout = ({ children, pageTitle = ' ' }) => {
   useEffect(() => {
     if (isLogin) {
       dispatch(setLogin(true));
-      dispatch(getCarts());
-      dispatch(getFavorites());
+      getCarts();
+      getFavorites();
     } else {
       localStorage.removeItem('accessToken');
       dispatch(logout());

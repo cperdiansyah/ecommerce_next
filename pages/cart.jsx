@@ -1,6 +1,6 @@
 import { Checkbox } from '@chakra-ui/react';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../components/atom/Button';
 import Card from '../components/atom/Card';
 import Loader from '../components/atom/Loader';
@@ -8,15 +8,28 @@ import Message from '../components/atom/Message';
 
 import Layout from '../components/templates/Layout';
 import ProductCartItem from '../components/molecules/ProductCartitem';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import favoriteHooks from '../hooksRedux/favoriteHooks';
+import cartHooks from '../hooksRedux/cartHooks';
 
 const favorites = () => {
+  const dispatch = useDispatch();
+  const { getCarts } = cartHooks();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const productCartSelector = useSelector(
-    (state) => state.products.productCart
-  );
+  const productCartSelector = useSelector((state) => state.products);
+  const { productCart } = productCartSelector;
+
+  const [cart, setCart] = useState(productCart);
+
+  useEffect(() => {
+    getCarts();
+  }, []);
+
+  useEffect(() => {
+    setCart(productCart);
+  }, [productCart]);
 
   const cartCheckoutHandler = () => {
     console.log('cartCheckoutHandler');
@@ -37,9 +50,17 @@ const favorites = () => {
                 <div className=" mt-7 flex w-full flex-col justify-between md:flex-row">
                   <div className="products-cart-list-wrapper mb-7 w-full md:mb-0 md:w-3/4">
                     <Card className=" md:mr-7 ">
-                      {productCartSelector.map((product, index) => (
-                        <ProductCartItem {...product} key={index} />
-                      ))}
+                      {cart.length > 0 ? (
+                        cart.map((product, index) => (
+                          <ProductCartItem {...product} key={index} />
+                        ))
+                      ) : (
+                        <div className="text-center">
+                          <h3 className="text-xl font-semibold text-slate-800">
+                            Your cart is empty
+                          </h3>
+                        </div>
+                      )}
                     </Card>
                   </div>
                   <div className="products-bill-wrapper w-full  md:w-1/4">

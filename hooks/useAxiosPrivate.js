@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { axiosPrivate } from '../config/axios';
+
 import useAuth from './useAuth';
 import useRefreshToken from './useRefreshToken';
 
@@ -7,15 +8,24 @@ const useAxiosPrivate = () => {
   const { auth } = useAuth();
   const refresh = useRefreshToken();
 
+  const getLocalStorage = (key) => {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem(key);
+    }
+  };
+
+  const accessToken = getLocalStorage('accessToken') || auth?.accessToken;
+
   useEffect(() => {
     const requestInterceptor = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers['Authorization']) {
-          config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
+          config.headers['Authorization'] = `Bearer ${accessToken}`;
         }
         return config;
       },
       (error) => {
+        console.log(error);
         return Promise.reject(error);
       }
     );
@@ -39,6 +49,7 @@ const useAxiosPrivate = () => {
     };
   }, [auth, refresh]);
 
+  // console.log(auth);
   return axiosPrivate;
 };
 

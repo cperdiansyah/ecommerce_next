@@ -8,16 +8,22 @@ const useAuth = () => {
   let decodedToken;
   const [auth, setAuth] = useState(decodedToken);
 
-  const getFromStorage = (key) => {
-    if (typeof window !== 'undefined') {
-      return window.localStorage.getItem(key);
+  const getLocalStorage = (key) => {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem(key);
     }
   };
 
-  const [accessToken, setAccessToken] = useState(getFromStorage('accessToken'));
+
+  const token = getLocalStorage('accessToken');
+
+  const [accessToken, setAccessToken] = useState(token);
 
   useEffect(() => {
     setAccessToken(localStorage.getItem('accessToken'));
+  }, []);
+
+  useEffect(() => {
     if (accessToken) {
       decodedToken = jwtDecode(accessToken);
       dispatch(setReduxAuth(decodedToken));
