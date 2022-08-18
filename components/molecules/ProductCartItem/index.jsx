@@ -1,18 +1,41 @@
+import { useEffect, useState } from 'react';
 import { Button, Checkbox } from '@chakra-ui/react';
 import Image from 'next/image';
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteCarts } from '../../../redux/actions/productActions';
+import { useSelector } from 'react-redux';
+import cartHooks from '../../../hooksRedux/cartHooks';
+import favoriteHooks from '../../../hooksRedux/favoriteHooks';
+import { productFavoriteSelector } from '../../../redux/reducers/productReducers';
 import localCurrency from '../../../utils/localCurrency';
 import QuantityControl from '../../atom/QuantityControl';
+import Link from 'next/link';
 
 const ProductCartItem = (props) => {
-  const dispatch = useDispatch();
-  // console.log(props);
+  const { addFavorite } = favoriteHooks();
+  const { updateCart, deleteCarts } = cartHooks();
+  const [favorite, setFavorite] = useState(false);
   const { product, quantity, _id: id } = props;
 
+  const favoriteState = useSelector(productFavoriteSelector).filter(
+    (item) => item.product._id === product._id
+  );
+
+  useEffect(() => {
+    if (favoriteState.length > 0) {
+      setFavorite(true);
+    }
+  }, [id, favoriteState.length]);
+
   const deleteCartHandler = () => {
-    dispatch(deleteCarts(id));
+    deleteCarts(id);
+  };
+
+  const addFavoriteHandler = () => {
+    addFavorite(product);
+    setFavorite(!favorite);
+  };
+
+  const updateCartHandler = (value) => {
+    updateCart(id, value);
   };
 
   return (
@@ -39,12 +62,12 @@ const ProductCartItem = (props) => {
         <div className="product-info-wrapper mx-2 max-w-md">
           <div className="product-price-wrapper">
             <h3 className="font-sans text-base font-semibold text-slate-700">
-              {localCurrency(product.price)}
+              {localCurrency(product.price * quantity)}
             </h3>
           </div>
           <div className="product-text-wrapper">
             <h3 className="font-sans text-lg font-bold text-slate-800">
-              {product.name}
+              <Link href={`/product/${product._id}`}>{product.name}</Link>
             </h3>
             <p
               className="text-sm text-slate-600 line-clamp-2"
@@ -55,14 +78,19 @@ const ProductCartItem = (props) => {
           </div>
 
           <div className="product-buton-wrapper">
-            <Button variant="no_border">
-              <i className="fa-regular fa-heart mr-2"></i>
-              Add to favorites
+            <Button variant="no_border" onClick={addFavoriteHandler}>
+              {favorite ? (
+                <i className="fa-solid fa-heart mr-2 text-rose-400"></i>
+              ) : (
+                <i className="fa-regular fa-heart mr-2"></i>
+              )}
+
+              <span className="text-slate-700">Add to favorites</span>
             </Button>
 
             <Button variant="no_border" onClick={deleteCartHandler}>
               <i className="fa-regular fa-trash-can mr-2"></i>
-              Delete
+              <span className="text-slate-700">Delete</span>
             </Button>
           </div>
         </div>
@@ -72,6 +100,7 @@ const ProductCartItem = (props) => {
             id={id}
             defaultValue={quantity}
             max={product.countInStock}
+            updateQuantity={updateCartHandler}
           />
         </div>
       </div>

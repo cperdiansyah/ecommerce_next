@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Button } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
@@ -13,7 +13,6 @@ import Rating from '../Rating';
 
 import localCurrency from '../../../utils/localCurrency';
 import styles from './productCard.module.css';
-import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
 import { productFavoriteSelector } from '../../../redux/reducers/productReducers';
 import favoriteHooks from '../../../hooksRedux/favoriteHooks';
 import cartHooks from '../../../hooksRedux/cartHooks';
@@ -25,7 +24,6 @@ const ProductCard = ({ product }) => {
 
   const [favorite, setFavorite] = useState(false);
   const isLogin = Cookies.get('isLogin');
-  const axiosPrivate = useAxiosPrivate();
   const { _id: productId } = product;
 
   const favoriteState = useSelector(productFavoriteSelector).filter(
@@ -54,7 +52,6 @@ const ProductCard = ({ product }) => {
     loginCehck();
     if (parseInt(isLogin)) {
       addFavorite(product);
-      getFavorites();
       setFavorite(!favorite);
     }
   };
@@ -62,9 +59,7 @@ const ProductCard = ({ product }) => {
   const cartButtonHandler = async () => {
     loginCehck();
     if (parseInt(isLogin)) {
-      // const response = await axiosPrivate.post(`/cart/${productId}`);
       addCarts(product);
-      getCarts();
     }
   };
   return (

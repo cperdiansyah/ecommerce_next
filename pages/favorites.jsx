@@ -11,7 +11,7 @@ const favorites = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const favorites = useSelector(productFavoriteSelector);
-
+  // console.log(favorites);
 
   useEffect(() => {
     setLoading(false);
@@ -32,7 +32,6 @@ const favorites = () => {
                   <h2 className="font-sans text-2xl font-bold text-slate-800">
                     Favorites
                   </h2>
-                  
                 </div>
                 <div className="mt-5 grid grid-cols-2 gap-5 md:grid-cols-3 lg:mt-10 lg:grid-cols-5 lg:gap-7">
                   {favorites.map((favorite, index) => (

@@ -12,13 +12,21 @@ const cartHooks = () => {
   };
 
   const addCarts = async (product) => {
-    const { data: cartData } = await axiosPrivate.post(
-      `cart/${product._id}`,
-      product
-    );
-    dispatch(cartsState(cartData.data));
+    await axiosPrivate.post(`cart/${product._id}`, product);
+    getCarts();
   };
-  return { getCarts, addCarts };
+
+  const updateCart = async (id, data) => {
+    await axiosPrivate.put(`cart/${id}`, data);
+
+    getCarts();
+  };
+
+  const deleteCarts = async (productId) => {
+    await axiosPrivate.delete(`cart/${productId}`);
+    getCarts();
+  };
+  return { getCarts, addCarts, deleteCarts, updateCart };
 };
 
 export default cartHooks;

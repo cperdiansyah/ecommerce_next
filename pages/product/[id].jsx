@@ -21,6 +21,8 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { getCarts, getFavorites } from '../../redux/actions/productActions';
 import axios from '../../config/axios';
 import { productFavoriteSelector } from '../../redux/reducers/productReducers';
+import cartHooks from '../../hooksRedux/cartHooks';
+import favoriteHooks from '../../hooksRedux/favoriteHooks';
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -96,6 +98,9 @@ const ProductDetails = (props) => {
 const ProductInfo = ({ product, category }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { getFavorites, addFavorite } = favoriteHooks();
+  const { getCarts, addCarts } = cartHooks();
+
   const isLogin = Cookies.get('isLogin');
   const axiosPrivate = useAxiosPrivate();
   const [favorite, setFavorite] = useState(false);
@@ -126,17 +131,18 @@ const ProductInfo = ({ product, category }) => {
   const favoriteButtonHandler = async () => {
     loginCehck();
     if (parseInt(isLogin)) {
-      const response = await axiosPrivate.post(`/favorite/${productId}`);
+      addFavorite(product);
+      getFavorites();
       setFavorite(!favorite);
-      dispatch(getFavorites());
     }
   };
 
   const cartButtonHandler = async () => {
     loginCehck();
     if (parseInt(isLogin)) {
-      const response = await axiosPrivate.post(`/cart/${productId}`);
-      dispatch(getCarts());
+      
+      addCarts(product);
+      getCarts();
     }
   };
   return (

@@ -16,7 +16,8 @@ const favoriteHooks = () => {
       `favorite/${product._id}`,
       product
     );
-    dispatch(favoritesState(favorite.data));
+    getFavorites()
+    // dispatch(favoritesState(favorite.data));
   };
 
   return { getFavorites, addFavorite };
