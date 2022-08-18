@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react';
 import { Button, Checkbox } from '@chakra-ui/react';
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import cartHooks from '../../../hooksRedux/cartHooks';
 import favoriteHooks from '../../../hooksRedux/favoriteHooks';
-import { productFavoriteSelector } from '../../../redux/reducers/productReducers';
+import {
+  productCartToCheckoutSelector,
+  productFavoriteSelector,
+} from '../../../redux/reducers/productReducers';
 import localCurrency from '../../../utils/localCurrency';
 import QuantityControl from '../../atom/QuantityControl';
 import Link from 'next/link';
+import {
+  addCartToCheckout,
+  removeCartToCheckout,
+} from '../../../redux/actions/productActions';
 
 const ProductCartItem = (props) => {
+  const dispatch = useDispatch();
   const { addFavorite } = favoriteHooks();
   const { updateCart, deleteCarts } = cartHooks();
   const [favorite, setFavorite] = useState(false);
@@ -18,6 +26,11 @@ const ProductCartItem = (props) => {
   const favoriteState = useSelector(productFavoriteSelector).filter(
     (item) => item.product._id === product._id
   );
+
+  const cartChekout = useSelector(productCartToCheckoutSelector);
+
+  // const [isChecked, setIsChecked] = useState(thisCart.length > 0);
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     if (favoriteState.length > 0) {
@@ -38,10 +51,27 @@ const ProductCartItem = (props) => {
     updateCart(id, value);
   };
 
+  const checkBoxHandler = () => {
+    if (isChecked) {
+      const cartChekoutRemove = cartChekout.filter(
+        (item) => item.product._id !== product._id
+      );
+      dispatch(removeCartToCheckout(cartChekoutRemove));
+    } else {
+      dispatch(addCartToCheckout(props));
+    }
+    setIsChecked(!isChecked);
+  };
+
   return (
     <div className="flex flex-row items-center justify-between">
       <div className="checkbox-wrapper">
-        <Checkbox size="lg" colorScheme="orange" />
+        <Checkbox
+          size="lg"
+          colorScheme="orange"
+          isChecked={isChecked}
+          onChange={checkBoxHandler}
+        />
       </div>
 
       <div className="product-wrapper flex items-center">

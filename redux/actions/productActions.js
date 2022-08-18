@@ -9,6 +9,8 @@ import {
   PRODUCT_DELETE_CART,
   PRODUCT_CART,
   PRODUCT_FAVORITE,
+  PRODUCT_REMOVE_CART_TO_CHECKOUT,
+  PRODUCT_ADD_CART_TO_CHECKOUT,
 } from '../constants/productConstans';
 import ROOT_URL from '../../utils/url';
 import { fetch } from '../../utils/request';
@@ -93,3 +95,16 @@ export const getFavorites = createAsyncThunk(PRODUCT_GET_FAVORITE, async () => {
   const { data: favoriteData } = await axiosPrivate.get('/favorite');
   return favoriteData.data;
 });
+
+export const addCartToCheckout = createAsyncThunk(
+  PRODUCT_ADD_CART_TO_CHECKOUT,
+  async (data) => {
+    return data;
+  }
+);
+export const removeCartToCheckout = createAsyncThunk(
+  PRODUCT_REMOVE_CART_TO_CHECKOUT,
+  async (data) => {
+    return data;
+  }
+);

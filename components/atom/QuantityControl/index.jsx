@@ -23,7 +23,7 @@ const QuantityControl = ({
   const dec = getDecrementButtonProps();
   const input = getInputProps();
   const quantity = input.value;
-  console.log(quantity);
+  // console.log(quantity);
 
   const quantityJson = {
     quantity,

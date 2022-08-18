@@ -8,6 +8,8 @@ import {
   addCarts,
   cartsState,
   favoritesState,
+  addCartToCheckout,
+  removeCartToCheckout,
 } from '../actions/productActions';
 
 const productEntity = createEntityAdapter({
@@ -57,6 +59,7 @@ const product = createSlice({
   name: 'product',
   initialState: {
     productCart: [],
+    productCartToCheckout: [],
     productFavorite: [],
     error: null,
   },
@@ -80,13 +83,44 @@ const product = createSlice({
     [favoritesState.pending.type]: (state, action) => {
       state.loading = true;
     },
-
     [favoritesState.fulfilled.type]: (state, action) => {
       state.loading = false;
       state.productFavorite = action.payload;
     },
-
     [favoritesState.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    /* PRODUCT_CART_TO_CHECKOUT Reducers */
+    [addCartToCheckout.pending.type]: (state, action) => {
+      state.loading = true;
+    },
+
+    [addCartToCheckout.fulfilled.type]: (state, action) => {
+      return {
+        ...state,
+        productCartToCheckout: [...state.productCartToCheckout, action.payload],
+      };
+    },
+
+    [addCartToCheckout.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    /* REMOVE_CART_TO_CHECKOUT Reducers */
+    [removeCartToCheckout.pending.type]: (state, action) => {
+      state.loading = true;
+    },
+    [removeCartToCheckout.fulfilled.type]: (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        productCartToCheckout: [...action.payload],
+      };
+    },
+    [removeCartToCheckout.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
@@ -103,6 +137,9 @@ export const productDetailsSelector = productEntity.getSelectors(
 export const productCartSelector = (state) => state.products.productCart;
 export const productFavoriteSelector = (state) =>
   state.products.productFavorite;
+
+export const productCartToCheckoutSelector = (state) =>
+  state.products.productCartToCheckout;
 
 /* Export reducer */
 export const productListReducer = productList.reducer;

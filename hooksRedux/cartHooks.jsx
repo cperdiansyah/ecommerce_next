@@ -26,6 +26,10 @@ const cartHooks = () => {
     await axiosPrivate.delete(`cart/${productId}`);
     getCarts();
   };
+
+ 
+
+
   return { getCarts, addCarts, deleteCarts, updateCart };
 };
 
